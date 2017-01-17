@@ -8,9 +8,9 @@
 HelpU est une application d'**entraide entre étudiants**.
 
 Elle permet aux étudiants d'aider ou bien de se faire aider en leur donnant la possibilité de :
-* recevoir des cours individuels, 
-* recevoir des cours groupés,
-* récupérer des fiches de cours, 
+* recevoir des **cours individuels**, 
+* recevoir des **cours groupés**,
+* récupérer des **fiches de cours**, 
  le tout venant d'étudiants plus compétents dans la/les  matière(s) en question.
 
 
@@ -24,7 +24,7 @@ Elle permet aux étudiants d'aider ou bien de se faire aider en leur donnant la 
 
 ## Authors
 
-* **Mamadou Baba Makadji** 
-* **David Meimoun**
-* **Joan Medjid** 
+* Mamadou Baba Makadji
+* David Meimoun
+* Joan Medjid 
 
