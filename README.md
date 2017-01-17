@@ -26,5 +26,5 @@ Elle permet aux étudiants d'aider ou bien de se faire aider en leur donnant la 
 
 * Mamadou Baba Makadji
 * David Meimoun
-* Joan Medjid 
+* Joan Medjid
 
