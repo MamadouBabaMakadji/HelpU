@@ -6,7 +6,7 @@ HelpU est une application d'entraide entre étudiants.
 
 
 ## Use Case
-![](master/UseCase/HelpU%20UseCase.png)
+![](https://github.com/Jmedjid/HelpU/blob/master/UseCase/HelpU%20UseCase.png)
 
 
 ## Built With
