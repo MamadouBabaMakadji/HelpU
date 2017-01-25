@@ -1,6 +1,22 @@
 <resources>
-    <string name="app_name">Material Login Example</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Help U</string>
+    <string name="hello_word">Bienvenue dans Help U</string>
     <string name="action_settings">Settings</string>
+
+    <!-- partie signup -->
+    <string name="signup_address">Address</string>
+    <string name="signup_name">Name</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_mobile">Mobile Number</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_passwordAgain">Re-enter Password</string>
+    <string name="signup_createAccount">Create Account</string>
+    <string name="signup_alreadyMember">Already a member? Login</string>
+
+    <!-- partie login -->
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Login</string>
+    <string name="login_NoAccountYet">No account yet? Create one</string>
+
 </resources>
