@@ -116,7 +116,8 @@
             android:layout_marginBottom="24dp"
             android:text="@string/signup_alreadyMember"
             android:gravity="center"
-            android:textSize="16dip"/>
+            android:textSize="16dip"
+            android:textColor="@color/iron" />
 
     </LinearLayout>
 </ScrollView>
