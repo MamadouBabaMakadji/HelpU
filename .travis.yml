@@ -33,4 +33,5 @@ script:
   
 # Sync Slack
 notifications:
-  slack: assogenda:m88NLRiY4UxkgThbI1ONxdFr
+  email: false
+  slack: m1miagecla:BL5y4dP6NKNyXpUbQYcjG4RJ
