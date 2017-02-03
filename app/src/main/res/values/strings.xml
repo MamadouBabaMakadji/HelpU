@@ -22,5 +22,8 @@
     <!-- partie Main -->
     <string name="SearchHelper"> Search Helper</string>
     <string name="BecomeHelper"> Become Helper</string>
+    <string name="beHelper"> In which course would you like to help someone ?</string>
+    <string name="Want">I want help someone </string>
+    <string name="thanks">Thanks for your help.We will contact you when someone needs you. </string>
 
 </resources>
