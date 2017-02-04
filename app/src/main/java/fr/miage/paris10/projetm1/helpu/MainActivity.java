@@ -24,7 +24,8 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-        btn_help.setOnClickListener(new View.OnClickListener() {
+        btn_help = (Button) findViewById(R.id.button_help);
+       btn_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,BecomeHelperActivity.class);
