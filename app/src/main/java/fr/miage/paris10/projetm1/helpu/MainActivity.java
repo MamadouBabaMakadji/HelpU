@@ -20,8 +20,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         btn_help = (Button) findViewById(R.id.button_help);
