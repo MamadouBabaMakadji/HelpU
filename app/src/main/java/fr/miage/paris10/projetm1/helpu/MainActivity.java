@@ -4,6 +4,7 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by david on 24/01/2017.
  */
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private Button btn_help;
     @Override
