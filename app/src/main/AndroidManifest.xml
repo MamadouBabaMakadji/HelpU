@@ -23,8 +23,10 @@
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".BecomeHelperActivity" />
-        <activity android:name=".ValidationActivity"></activity>
+        <activity android:name=".BecomeHelperActivity"
+            android:icon="@drawable/home"/>
+        <activity android:name=".ValidationActivity"
+            android:icon="@drawable/home"></activity>
     </application>
 
 </manifest>
