@@ -33,18 +33,5 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="12dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_above="@+id/button_help"
-        android:layout_toStartOf="@+id/button_search" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:layout_alignTop="@+id/button_help"
-        android:layout_toStartOf="@+id/button_help" />
 
 </RelativeLayout>
