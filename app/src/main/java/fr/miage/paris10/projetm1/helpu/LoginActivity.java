@@ -4,6 +4,7 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by david on 24/01/2017.
  */
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 

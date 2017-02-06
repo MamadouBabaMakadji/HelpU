@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,5 +11,44 @@
 
     <TextView android:text="@string/hello_word" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:background="#FFA500"
+        android:textColor="#000000"
+        android:text="@string/BecomeHelper"
+        android:layout_width="274dp"
+        android:layout_height="70dp"
+        android:id="@+id/button_help"
+        android:layout_below="@+id/button_search"
+        android:layout_alignLeft="@+id/button_search"
+        android:layout_alignStart="@+id/button_search"
+        android:layout_marginTop="124dp" />
+
+    <Button
+        android:background="#FFA500"
+        android:textColor="#000000"
+        android:text="@string/SearchHelper"
+        android:src="@drawable/search"
+        android:layout_width="274dp"
+        android:layout_height="70dp"
+        android:id="@+id/button_search"
+        android:layout_marginTop="81dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/search"
+        android:id="@+id/imageView2"
+        android:layout_above="@+id/button_help"
+        android:layout_toStartOf="@+id/button_search" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/help"
+        android:id="@+id/imageView3"
+        android:layout_alignTop="@+id/button_help"
+        android:layout_toStartOf="@+id/button_help" />
 
 </RelativeLayout>
