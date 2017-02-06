@@ -4,7 +4,6 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by david on 24/01/2017.
  */
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
-public class SignupActivity extends Activity {
+public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     @Bind(R.id.input_name) EditText _nameText;
