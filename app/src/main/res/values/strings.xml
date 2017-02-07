@@ -25,5 +25,11 @@
     <string name="beHelper"> In which course would you like to help someone ?</string>
     <string name="Want">I want help someone </string>
     <string name="thanks">Thanks for your help.We will contact you when someone needs you. </string>
+    <string name="action_logout">Logout</string>
+    <!--erreur -->
+    <string name="login_error_message">Please make sure you enter an email address and password!</string>
+    <string name="login_error_title">Error!</string>
+    <string name="signup_error_message">Please make sure you enter an email address and password!</string>
+    <string name="signup_error_title">Error!</string>
 
 </resources>
