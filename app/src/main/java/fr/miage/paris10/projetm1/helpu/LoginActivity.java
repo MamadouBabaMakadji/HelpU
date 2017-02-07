@@ -84,35 +84,34 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+
 
         // TODO: Implement your own authentication logic here.
-        mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        String email = _emailText.getText().toString();
+                        String password = _passwordText.getText().toString();
+                        mFirebaseAuth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
-                        } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                            builder.setMessage(task.getException().getMessage())
-                                    .setTitle(R.string.login_error_title)
-                                    .setPositiveButton(android.R.string.ok, null);
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        }
-                    }
-                });
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
+                                            onLoginSuccess();
+                                        } else {
+
+                                            onLoginFailed();
+                                        }
+                                    }
+                                });
                         // On complete call either onLoginSuccess or onLoginFailed
-                       onLoginSuccess();
-                         //onLoginFailed();
+                       //onLoginSuccess();
+                       //  onLoginFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -144,7 +143,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
+                        /*    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                            builder.setMessage(task.getException().getMessage())
+                                    .setTitle(R.string.login_error_title)
+                                    .setPositiveButton(android.R.string.ok, null);
+                            AlertDialog dialog = builder.create();
+                            dialog.show();*/
         _loginButton.setEnabled(true);
     }
 
