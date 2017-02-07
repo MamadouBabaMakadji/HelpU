@@ -7,6 +7,8 @@ before_install:
  - chmod +x gradlew
  
 env:
+  matrix: 
+    secure: vCYJYYByXqzMMmpjPYGEXjyVlZKZ3watiUEgVlQWs7Q8hbbQW+BHCjSXrWSbFitKeFq0lKEBxQxN2TNSBd6Q+tbDFFceOXVIy+d7SnFiXXB6SdI57BIUFaEI1HH6gdWfL8A9WnzeyMBfUtw+KXZPyVN/C5FwX1DGkS79eX43Ha5/D/XoWxgD49FNt7SOarXEaQBzat6As4lm/fxo5BuSteyyTBhCNb1tYI8gXZ4Ej7CzE09vM+p2qDx1FhIuN6MJZr5oGGKraG97GaF/LEGayPwOjwV6Cz2ci8FkD99fFoDTvNzg/tC0No2TvQUNTyPXo/WIuVSKWrZC7zsFpz3NGjoVpo7IkgzN3f+9MpvhMY0vR8yHJ6irQ4PZZRYFYwN0F/zsTEqIS/IO1oDcfPfQYdJ1hUmy/9nRclPXfwk5elww6rrWo6V8TfVB9Kf1QRym2BEHxcRvEA3ipylvs2tiwBKiNswXxAKPm7UFY4Gyt2F97vyG6K5Sxhqn5wdHexI6A3FmBxi+D3aNQfOy+YiBkN9lnEBOew8mSVDctC5bBD7FpkU+sElvpF5nAGal7YaR7xtoT9yLJpF5/Vdyws2vRG3j1vCX/7xx8F7o08lGT6CxrX1LDjXDmtjMxYVZn3Tj6NjoCYd0e2d1nmTz502UpL5LaNWbk845k/ohURLjqr4=
   global:
     - ANDROID_TARGET=android-25
     - ANDROID_ABI=armeabi-v7a
@@ -27,9 +29,18 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
+before_install:
+  - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >jpm4j.jar
+  - java -jar jpm4j.jar -u init
+  - ~/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
+
 # Build
 script:
   - ./gradlew assembleAndroidTest
+  - ./gradlew check jacocoTestReport coveralls
+
+after_success:
+  - ~/jpm/bin/codacy-coverage-reporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
   
 # Sync Slack
 notifications:
