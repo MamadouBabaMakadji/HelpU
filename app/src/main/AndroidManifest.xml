@@ -14,12 +14,15 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+                <uses-permission android:name="android.permission.INTERNET" />
             </intent-filter>
         </activity>
         <activity android:name="fr.miage.paris10.projetm1.helpu.LoginActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name="fr.miage.paris10.projetm1.helpu.SignupActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name="fr.miage.paris10.projetm1.helpu.BecomeHelperActivity" android:theme="@style/AppTheme.Dark.ActionBar" />
         <activity android:name="fr.miage.paris10.projetm1.helpu.ValidationActivity" android:theme="@style/AppTheme.Dark.ActionBar" />
+
     </application>
 
 </manifest>
