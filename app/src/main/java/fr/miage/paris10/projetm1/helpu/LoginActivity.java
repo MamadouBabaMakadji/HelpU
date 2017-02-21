@@ -6,6 +6,9 @@ package fr.miage.paris10.projetm1.helpu;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +26,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.Bind;
@@ -33,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth mAuthListener;
+    private FirebaseUser mFirebaseUser;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
@@ -45,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize FirebaseAuth
         mFirebaseAuth = FirebaseAuth.getInstance();
+
 
         ButterKnife.bind(this);
 
@@ -71,50 +81,69 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         Log.d(TAG, "Login");
 
-        if (!validate()) {
-            onLoginFailed();
-            return;
+        if(!isOnline())
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setMessage(R.string.internet_error_message)
+                    .setTitle(R.string.signup_error_title);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }else{
+
+            if (!validate()) {
+                onLoginFailed();
+                return;
+            }
+
+            //_loginButton.setEnabled(false);
+
+            final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Authenticating...");
+            progressDialog.show();
+
+            // TODO: Implement your own authentication logic here.
+
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            String email = _emailText.getText().toString();
+                            String password = _passwordText.getText().toString();
+                            mFirebaseAuth.signInWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+
+                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                if( user.isEmailVerified()){
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(intent);
+                                                    onLoginSuccess();
+                                                }
+                                                else{
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                                    builder.setMessage(R.string.verify_email_error_message)
+                                                            .setTitle(R.string.signup_error_title);
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+                                                }
+                                            } else {
+                                                onLoginFailed();
+                                            }
+                                        }
+                                    });
+
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+
         }
 
-        _loginButton.setEnabled(false);
-
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
-
-
-
-        // TODO: Implement your own authentication logic here.
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        String email = _emailText.getText().toString();
-                        String password = _passwordText.getText().toString();
-                        mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                                            onLoginSuccess();
-                                        } else {
-
-                                            onLoginFailed();
-                                        }
-                                    }
-                                });
-                        // On complete call either onLoginSuccess or onLoginFailed
-                       //onLoginSuccess();
-                       //  onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
     }
 
 
@@ -137,19 +166,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-        _loginButton.setEnabled(true);
+       // _loginButton.setEnabled(true);
         finish();
     }
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-                        /*    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                            builder.setMessage(task.getException().getMessage())
-                                    .setTitle(R.string.login_error_title)
-                                    .setPositiveButton(android.R.string.ok, null);
-                            AlertDialog dialog = builder.create();
-                            dialog.show();*/
-        _loginButton.setEnabled(true);
+
+        //_loginButton.setEnabled(true);
     }
 
     public boolean validate() {
@@ -158,10 +182,18 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
+        Pattern p = Pattern.compile(".+@u-paris10.fr+");
+        Matcher m = p.matcher(email);
+
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            _emailText.setError("Enter a valid email address");
             valid = false;
-        } else {
+        }
+        else if (!m.matches()){
+            _emailText.setError("Domain name must be u-paris10.fr");
+            valid = false;
+        }
+        else {
             _emailText.setError(null);
         }
 
@@ -174,4 +206,15 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfoMob = cm.getNetworkInfo(cm.TYPE_MOBILE);
+        NetworkInfo netInfoWifi = cm.getNetworkInfo(cm.TYPE_WIFI);
+        if ((netInfoMob != null || netInfoWifi != null) && (netInfoMob.isConnectedOrConnecting() || netInfoWifi.isConnectedOrConnecting())) {
+            return true;
+        }
+        return false;
+    }
+
 }

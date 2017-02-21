@@ -43,16 +43,15 @@ import butterknife.Bind;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth mAuthListener;
     private DatabaseReference mDatabaseReference;
 
     @Bind(R.id.input_firstName) EditText _firstNameText;
     @Bind(R.id.input_lastName) EditText _lastNameText;
-    //@Bind(R.id.input_address) EditText _addressText;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.spinner_level) Spinner _levelSpinner;
-    //@Bind(R.id.input_mobile) EditText _mobileText;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
     @Bind(R.id.btn_signup) Button _signupButton;
@@ -126,10 +125,8 @@ public class SignupActivity extends AppCompatActivity {
 
                             String lastName = _lastNameText.getText().toString();
                             String firstName = _firstNameText.getText().toString();
-                            // String address = _addressText.getText().toString();
                             String email = _emailText.getText().toString();
                             String level = _levelSpinner.getSelectedItem().toString();
-                            //String mobile = _mobileText.getText().toString();
                             String password = _passwordText.getText().toString();
 
                             UserInformation userInformation = new UserInformation(lastName, firstName, level);
@@ -142,15 +139,37 @@ public class SignupActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
                                                 //mFirebaseAuth.getCurrentUser().sendEmailVerification();
+                                                sendVerificationEmail();
                                                 loadLogInView();
+
+                                               /* final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                user.sendEmailVerification()
+
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                               // user.sendEmailVerification();
+                                                                if (task.isSuccessful()) {
+                                                                   // finish();
+                                                                    Toast.makeText(SignupActivity.this, "Registered Successfully. Check your email", Toast.LENGTH_SHORT).show();
+                                                                    //startActivity(new Intent(getApplicationContext(), yourActivity.class));
+                                                                    loadLogInView();
+                                                                }
+                                                            }
+                                                        });*/
+/*
+                                                if (mFirebaseAuth.getCurrentUser() != null) {
+                                                    finish();
+                                                    //startActivity(new Intent(getApplicationContext(), yourActivity.class));
+                                                    loadLogInView();
+                                                }
+
+
+
+*/
+                                                //loadLogInView();
                                                 onSignupSuccess();
                                             } else {
-                                            /*AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                                            builder.setMessage(task.getException().getMessage())
-                                                    .setTitle(R.string.login_error_title)
-                                                    .setPositiveButton(android.R.string.ok, null);
-                                            AlertDialog dialog = builder.create();
-                                            dialog.show();*/
                                                 onSignupFailed();
                                             }
                                         }
@@ -158,7 +177,6 @@ public class SignupActivity extends AppCompatActivity {
 
                             mDatabaseReference.child("user").push().setValue(userInformation);
 
-                            // onSignupFailed();
                             progressDialog.dismiss();
                         }
                     }, 3000);
@@ -191,9 +209,7 @@ public class SignupActivity extends AppCompatActivity {
 
         String lastName = _lastNameText.getText().toString();
         String firstName = _firstNameText.getText().toString();
-        // String address = _addressText.getText().toString();
         String email = _emailText.getText().toString();
-        //String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
@@ -211,15 +227,6 @@ public class SignupActivity extends AppCompatActivity {
             _firstNameText.setError(null);
         }
 
-        /*
-        if (address.isEmpty()) {
-            _addressText.setError("Enter Valid Address");
-            valid = false;
-        } else {
-            _addressText.setError(null);
-        }
-        */
-
         Pattern p = Pattern.compile(".+@u-paris10.fr+");
         Matcher m = p.matcher(email);
 
@@ -234,15 +241,6 @@ public class SignupActivity extends AppCompatActivity {
         else {
             _emailText.setError(null);
         }
-
-        /*
-        if (mobile.isEmpty() || mobile.length()!=10) {
-            _mobileText.setError("Enter Valid Mobile Number");
-            valid = false;
-        } else {
-            _mobileText.setError(null);
-        }
-        */
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             _passwordText.setError("Between 4 and 10 alphanumeric characters");
@@ -278,6 +276,24 @@ public class SignupActivity extends AppCompatActivity {
         return false;
     }
 
+    public void sendVerificationEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if (user != null) {
+            user.sendEmailVerification();
+    /*
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SignupActivity.this, "Signup successful. Verification email sent", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });*/
+
+
+        }
+    }
 
 }
