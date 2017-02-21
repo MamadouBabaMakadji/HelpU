@@ -97,102 +97,74 @@ public class SignupActivity extends AppCompatActivity {
     public void signup() {
         Log.d(TAG, "Signup");
 
-/*
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
-        if (isConnected){
-            Toast.makeText(getBaseContext(), "Not Connected to Internet", Toast.LENGTH_LONG).show();
-        }
-        else{
-            Toast.makeText(getBaseContext(), "You are not connected to Internet!", Toast.LENGTH_LONG).show();
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-            builder.setMessage(R.string.internet_error_message)
-                    .setTitle(R.string.signup_error_title);
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-
-        }*/
-
         if(!isOnline())
         {
-
             AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
             builder.setMessage(R.string.internet_error_message)
                     .setTitle(R.string.signup_error_title);
             AlertDialog dialog = builder.create();
             dialog.show();
+        }else{
 
-        }
+            if (!validate()) {
+                onSignupFailed();
+                return;
+            }
 
+            // _signupButton.setEnabled(false);
 
-        if (!validate()) {
-            onSignupFailed();
-            return;
-        }
-
-       // _signupButton.setEnabled(false);
-
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
-        progressDialog.show();
+            final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Creating Account...");
+            progressDialog.show();
 
 
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        String lastName = _lastNameText.getText().toString();
-                        String firstName = _firstNameText.getText().toString();
-                        // String address = _addressText.getText().toString();
-                        String email = _emailText.getText().toString();
-                        String level = _levelSpinner.getSelectedItem().toString();
-                        //String mobile = _mobileText.getText().toString();
-                        String password = _passwordText.getText().toString();
+                            String lastName = _lastNameText.getText().toString();
+                            String firstName = _firstNameText.getText().toString();
+                            // String address = _addressText.getText().toString();
+                            String email = _emailText.getText().toString();
+                            String level = _levelSpinner.getSelectedItem().toString();
+                            //String mobile = _mobileText.getText().toString();
+                            String password = _passwordText.getText().toString();
 
-                        UserInformation userInformation = new UserInformation(lastName, firstName, level);
+                            UserInformation userInformation = new UserInformation(lastName, firstName, level);
 
-                        //if (user.isEmailVerified()){
-                        // TODO: Implement your own signup logic here.
-                        mFirebaseAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            //mFirebaseAuth.getCurrentUser().sendEmailVerification();
-                                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
-                                            onSignupSuccess();
-                                        } else {
+                            //if (user.isEmailVerified()){
+                            // TODO: Implement your own signup logic here.
+                            mFirebaseAuth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                //mFirebaseAuth.getCurrentUser().sendEmailVerification();
+                                                loadLogInView();
+                                                onSignupSuccess();
+                                            } else {
                                             /*AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
                                             builder.setMessage(task.getException().getMessage())
                                                     .setTitle(R.string.login_error_title)
                                                     .setPositiveButton(android.R.string.ok, null);
                                             AlertDialog dialog = builder.create();
                                             dialog.show();*/
-                                            onSignupFailed();
+                                                onSignupFailed();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
 
-                        mDatabaseReference.child("user").push().setValue(userInformation);
+                            mDatabaseReference.child("user").push().setValue(userInformation);
 
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+                            // onSignupFailed();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+
+        }
+
         /*}
         else{
 
