@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.sonarqube'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
@@ -32,9 +31,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:7.0.1'
 }
-sonarqube {
-    properties {
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-    }
-}
-apply plugin: 'com.google.gms.google-services'
+
