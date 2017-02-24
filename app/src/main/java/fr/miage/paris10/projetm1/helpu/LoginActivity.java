@@ -4,7 +4,7 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by david on 24/01/2017.
  */
 
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -34,14 +34,11 @@ import java.util.regex.Pattern;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
-import static java.security.AccessController.getContext;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth mAuthListener;
-    private FirebaseUser mFirebaseUser;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;

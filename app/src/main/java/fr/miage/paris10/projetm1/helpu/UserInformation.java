@@ -4,8 +4,6 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by JOAN on 02/02/2017.
  */
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
 public class UserInformation {
 
     public String email;
