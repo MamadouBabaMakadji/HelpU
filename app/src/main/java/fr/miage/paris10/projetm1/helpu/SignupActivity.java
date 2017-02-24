@@ -45,7 +45,6 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth mAuthListener;
     private DatabaseReference mDatabaseReference;
 
     @Bind(R.id.input_firstName) EditText _firstNameText;
@@ -129,7 +128,7 @@ public class SignupActivity extends AppCompatActivity {
                             String level = _levelSpinner.getSelectedItem().toString();
                             String password = _passwordText.getText().toString();
 
-                            UserInformation userInformation = new UserInformation(lastName, firstName, level);
+                            UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
 
                             //if (user.isEmailVerified()){
                             // TODO: Implement your own signup logic here.
@@ -281,7 +280,7 @@ public class SignupActivity extends AppCompatActivity {
 
         if (user != null) {
             user.sendEmailVerification();
-    /*
+    /*//
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

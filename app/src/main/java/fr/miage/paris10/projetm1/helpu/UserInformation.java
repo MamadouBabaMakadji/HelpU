@@ -8,18 +8,19 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 public class UserInformation {
 
+    public String email;
     public String lastName;
     public String firstName;
     public String level;
 
-    // Default constructor required for calls to
-    // DataSnapshot.getValue(User.class)
     public UserInformation() {
     }
 
-    public UserInformation(String lastName, String firstName, String level) {
+    public UserInformation(String email, String lastName, String firstName, String level) {
+        this.email = email;
         this.lastName = lastName;
         this.firstName = firstName;
         this.level = level;
     }
+
 }
