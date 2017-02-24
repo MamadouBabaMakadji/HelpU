@@ -5,7 +5,9 @@
 
     <!-- partie signup -->
     <string name="signup_address">Address</string>
-    <string name="signup_name">Name</string>
+    <string name="signup_firstName">First Name</string>
+    <string name="signup_lastName">Last Name</string>
+    <string name="signup_level">Level</string>
     <string name="signup_email">Email</string>
     <string name="signup_mobile">Mobile Number</string>
     <string name="signup_password">Password</string>
@@ -25,5 +27,26 @@
     <string name="beHelper"> In which course would you like to help someone ?</string>
     <string name="Want">I want help someone </string>
     <string name="thanks">Thanks for your help.We will contact you when someone needs you. </string>
+    <string name="action_logout">Logout</string>
+
+    <!--partie profile -->
+    <string name="UpdatePassword"> Update password</string>
+
+    <!--erreur -->
+    <string name="login_error_message">Please make sure you enter an email address and password!</string>
+    <string name="login_error_title">Error!</string>
+    <string name="signup_error_message">Please make sure you enter an email address and password!</string>
+    <string name="signup_error_title">Error!</string>
+    <string name="internet_error_message">You are not connected to Internet!</string>
+    <string name="verify_email_error_message">You have not verified your email</string>
+
+    <string-array name="level_array">
+        <item>Select a level</item>
+        <item>L1</item>
+        <item>L2</item>
+        <item>L3</item>
+        <item>M1</item>
+        <item>M2</item>
+    </string-array>
 
 </resources>

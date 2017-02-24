@@ -4,9 +4,8 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by david on 24/01/2017.
  */
 
-import android.app.Activity;
+
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,24 +13,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
     private Button btn_help;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        btn_help = (Button) findViewById(R.id.button_help);
-        btn_help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,BecomeHelperActivity.class);
-                startActivity(i);
-            }
-        });
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+
+        if (mFirebaseUser == null) {
+            // Not logged in, launch the Log In activity
+            loadLogInView();
+        }else {
+            btn_help = (Button) findViewById(R.id.button_help);
+            btn_help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(MainActivity.this, BecomeHelperActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
     @Override
@@ -50,9 +64,26 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+
+        if (id == R.id.action_logout) {
+            mFirebaseAuth.signOut();
+            loadLogInView();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void loadLogInView() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+
 }
