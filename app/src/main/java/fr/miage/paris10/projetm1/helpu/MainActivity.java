@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
             mFirebaseAuth.signOut();
             loadLogInView();
         }
+        if(id == R.id.mes_conversations){
+            Intent intent = new Intent(MainActivity.this,ListeConversationsActivity.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
