@@ -1,6 +1,5 @@
 package fr.miage.paris10.projetm1.helpu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

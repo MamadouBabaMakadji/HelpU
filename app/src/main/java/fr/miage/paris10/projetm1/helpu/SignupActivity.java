@@ -124,7 +124,6 @@ public class SignupActivity extends AppCompatActivity {
                             UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
 
                             //if (user.isEmailVerified()){
-                            // TODO: Implement your own signup logic here.
                             mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                                         @Override
