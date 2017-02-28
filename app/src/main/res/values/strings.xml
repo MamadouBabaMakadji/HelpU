@@ -5,18 +5,55 @@
 
     <!-- partie signup -->
     <string name="signup_address">Address</string>
-    <string name="signup_name">Name</string>
+    <string name="signup_firstName">First Name</string>
+    <string name="signup_lastName">Last Name</string>
+    <string name="signup_level">Level</string>
     <string name="signup_email">Email</string>
     <string name="signup_mobile">Mobile Number</string>
     <string name="signup_password">Password</string>
     <string name="signup_passwordAgain">Re-enter Password</string>
     <string name="signup_createAccount">Create Account</string>
     <string name="signup_alreadyMember">Already a member? Login</string>
+    <string name="check_email_title">Please check your email</string>
+    <string name="signup_emailVerification">An email verification has been sent to you</string>
 
     <!-- partie login -->
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_login">Login</string>
     <string name="login_NoAccountYet">No account yet? Create one</string>
+    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="lbl_forgot_password">Forgot password?</string>
+    <string name="forgot_password_msg">We just need your registered Email to sent you password reset instructions.</string>
+    <string name="btn_back"><![CDATA[<< Back]]></string>
+
+    <!-- partie Main -->
+    <string name="SearchHelper"> Search Helper</string>
+    <string name="BecomeHelper"> Become Helper</string>
+    <string name="beHelper"> In which course would you like to help someone ?</string>
+    <string name="Want">I want help someone </string>
+    <string name="thanks">Thanks for your help.We will contact you when someone needs you. </string>
+    <string name="action_logout">Logout</string>
+
+    <!--partie profile -->
+    <string name="UpdatePassword"> Update password</string>
+
+    <!--erreur -->
+    <string name="login_error_message">Please make sure you enter an email address and password!</string>
+    <string name="login_error_title">Error!</string>
+    <string name="signup_error_message">Please make sure you enter an email address and password!</string>
+    <string name="signup_error_title">Error!</string>
+    <string name="internet_error_message">You are not connected to Internet!</string>
+    <string name="verify_email_error_message">You have not verified your email</string>
+
+    <string-array name="level_array">
+        <item>Select a level</item>
+        <item>L1</item>
+        <item>L2</item>
+        <item>L3</item>
+        <item>M1</item>
+        <item>M2</item>
+    </string-array>
 
 </resources>
