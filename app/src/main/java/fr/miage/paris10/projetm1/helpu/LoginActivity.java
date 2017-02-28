@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
     @Bind(R.id.link_signup) TextView _signupLink;
+    @Bind(R.id.link_reset_password) TextView _resetPasswordLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 login();
+            }
+        });
+
+        _resetPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
             }
         });
 
@@ -99,6 +107,9 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();
+
+            // TODO: Implement your own authentication logic here.
+
 
             new android.os.Handler().postDelayed(
                     new Runnable() {
@@ -143,11 +154,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP && resultCode == RESULT_OK ) {
+        if (requestCode == REQUEST_SIGNUP) {
+            if (resultCode == RESULT_OK) {
+
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
-
+            }
         }
     }
 
@@ -201,13 +214,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfoMob = cm.getNetworkInfo(cm.TYPE_MOBILE);
-        NetworkInfo netInfoWifi = cm.getNetworkInfo(cm.TYPE_WIFI);
-        if ((netInfoMob != null || netInfoWifi != null) && (netInfoMob.isConnectedOrConnecting() || netInfoWifi.isConnectedOrConnecting())) {
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) { // connected to the internet
             return true;
         }
         return false;
-    }
 
+    }
 
 }

@@ -14,12 +14,19 @@
     <string name="signup_passwordAgain">Re-enter Password</string>
     <string name="signup_createAccount">Create Account</string>
     <string name="signup_alreadyMember">Already a member? Login</string>
+    <string name="check_email_title">Please check your email</string>
+    <string name="signup_emailVerification">An email verification has been sent to you</string>
 
     <!-- partie login -->
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_login">Login</string>
     <string name="login_NoAccountYet">No account yet? Create one</string>
+    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="lbl_forgot_password">Forgot password?</string>
+    <string name="forgot_password_msg">We just need your registered Email to sent you password reset instructions.</string>
+    <string name="btn_back"><![CDATA[<< Back]]></string>
 
     <!-- partie Main -->
     <string name="SearchHelper"> Search Helper</string>

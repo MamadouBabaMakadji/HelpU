@@ -23,11 +23,11 @@
       android:layout_weight="1" />
 
   <EditText
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:inputType="textPersonName"
       android:ems="10"
-      android:id="@+id/editText"
+      android:id="@+id/input_ec"
       android:layout_weight="1"
       android:layout_centerVertical="true"
       android:layout_centerHorizontal="true" />
@@ -36,9 +36,9 @@
       android:text="@string/Want"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="67dp"
       android:id="@+id/button_valider"
-      android:layout_below="@+id/editText"
-      android:layout_centerHorizontal="true" />
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginBottom="67dp" />
 
 </RelativeLayout>

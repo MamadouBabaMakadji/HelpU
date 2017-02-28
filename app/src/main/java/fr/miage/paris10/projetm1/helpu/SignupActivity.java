@@ -70,6 +70,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signup();
+
             }
         });
 
@@ -124,6 +125,7 @@ public class SignupActivity extends AppCompatActivity {
                             UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
 
                             //if (user.isEmailVerified()){
+                            // TODO: Implement your own signup logic here.
                             mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                                         @Override
@@ -131,34 +133,15 @@ public class SignupActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 //mFirebaseAuth.getCurrentUser().sendEmailVerification();
                                                 sendVerificationEmail();
-                                                loadLogInView();
+                                               // loadLogInView();
 
-                                               /* final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                                user.sendEmailVerification()
-
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                               // user.sendEmailVerification();
-                                                                if (task.isSuccessful()) {
-                                                                   // finish();
-                                                                    Toast.makeText(SignupActivity.this, "Registered Successfully. Check your email", Toast.LENGTH_SHORT).show();
-                                                                    //startActivity(new Intent(getApplicationContext(), yourActivity.class));
-                                                                    loadLogInView();
-                                                                }
-                                                            }
-                                                        });*/
 /*
                                                 if (mFirebaseAuth.getCurrentUser() != null) {
                                                     finish();
                                                     //startActivity(new Intent(getApplicationContext(), yourActivity.class));
                                                     loadLogInView();
                                                 }
-
-
-
 */
-                                                //loadLogInView();
                                                 onSignupSuccess();
                                             } else {
                                                 onSignupFailed();
@@ -174,12 +157,7 @@ public class SignupActivity extends AppCompatActivity {
 
         }
 
-        /*}
-        else{
 
-            Toast.makeText(getBaseContext(), "Please check your email", Toast.LENGTH_LONG).show();
-        }
-        */
     }
 
 
@@ -190,7 +168,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Sign up failed", Toast.LENGTH_LONG).show();
 
        // _signupButton.setEnabled(true);
     }
@@ -259,29 +237,38 @@ public class SignupActivity extends AppCompatActivity {
 
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfoMob = cm.getNetworkInfo(cm.TYPE_MOBILE);
-        NetworkInfo netInfoWifi = cm.getNetworkInfo(cm.TYPE_WIFI);
-        if ((netInfoMob != null || netInfoWifi != null) && (netInfoMob.isConnectedOrConnecting() || netInfoWifi.isConnectedOrConnecting())) {
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) { // connected to the internet
             return true;
         }
         return false;
+
     }
 
     public void sendVerificationEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
-            user.sendEmailVerification();
-    /*//
+           user.sendEmailVerification();
+            loadLogInView();
+            Toast.makeText(getBaseContext(), "An email verification has been sent to you", Toast.LENGTH_LONG).show();
+
+            /* TODO : add send verification
+            user.sendEmailVerification()
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(SignupActivity.this, "Signup successful. Verification email sent", Toast.LENGTH_SHORT).show();
+                                // finish();
+                                Toast.makeText(getBaseContext(), "Registered Successfully. Check your email", Toast.LENGTH_LONG).show();
+                                //startActivity(new Intent(getApplicationContext(), yourActivity.class));
+                               loadLogInView();
                             }
-
                         }
-                    });*/
+                    });
+            */
+
 
 
         }
