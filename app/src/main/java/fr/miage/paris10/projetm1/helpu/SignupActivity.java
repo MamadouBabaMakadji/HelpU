@@ -141,9 +141,6 @@ public class SignupActivity extends AppCompatActivity {
                                                     //startActivity(new Intent(getApplicationContext(), yourActivity.class));
                                                     loadLogInView();
                                                 }
-
-
-
 */
                                                 onSignupSuccess();
                                             } else {
@@ -267,7 +264,6 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "Registered Successfully. Check your email", Toast.LENGTH_LONG).show();
                                 //startActivity(new Intent(getApplicationContext(), yourActivity.class));
                                loadLogInView();
-
                             }
                         }
                     });
