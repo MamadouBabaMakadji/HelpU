@@ -13,9 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class BecomeHelperActivity extends AppCompatActivity{
 
   private Button btn_valider;
-  private EditText ecText;
-  private FirebaseAuth mFirebaseAuth;
-  private DatabaseReference mDatabaseReference;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +20,7 @@ public class BecomeHelperActivity extends AppCompatActivity{
     setContentView(R.layout.activity_become_helper);
 
     // Initialize FirebaseAuth
-    mFirebaseAuth = FirebaseAuth.getInstance();
-    mDatabaseReference = FirebaseDatabase.getInstance().getReference();
     btn_valider = (Button) findViewById(R.id.button_valider);
-    ecText = (EditText) findViewById(R.id.input_ec);
 
     btn_valider.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -35,7 +29,6 @@ public class BecomeHelperActivity extends AppCompatActivity{
         startActivity(intent);
       }
     });
-    //String ec = ecText.getText().toString();
 
   }
 }
