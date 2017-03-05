@@ -7,6 +7,7 @@ package fr.miage.paris10.projetm1.helpu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private Button btn_help;
 
     @Override
@@ -31,20 +33,43 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-        if (mFirebaseUser == null) {
-            // Not logged in, launch the Log In activity
-            loadLogInView();
-        }else {
-            btn_help = (Button) findViewById(R.id.button_help);
-            btn_help.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(MainActivity.this, BecomeHelperActivity.class);
-                    startActivity(i);
+                if (!loggedIn()) {
+                    //if user is not logged, lauch login activity
+                    loadLogInView();
+                    finish();
                 }
-            });
+                else {
+                    btn_help = (Button) findViewById(R.id.button_help);
+                    btn_help.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(MainActivity.this, BecomeHelperActivity.class);
+                            startActivity(i);
+                        }
+                    });
+                }
+            }
+        };
+        }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mFirebaseAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mFirebaseAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
@@ -63,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -75,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             loadLogInView();
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -85,5 +111,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public boolean loggedIn() {
+        return mFirebaseUser != null;
+    }
 
 }
