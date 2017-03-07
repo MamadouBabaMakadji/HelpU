@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -88,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_profile) {
+        /*if (id == R.id.action_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-        }
+        }*/
 
         if (id == R.id.action_logout) {
             mFirebaseAuth.signOut();

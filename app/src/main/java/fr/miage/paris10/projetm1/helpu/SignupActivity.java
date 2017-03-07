@@ -57,7 +57,6 @@ public class SignupActivity extends AppCompatActivity {
         // Initialize FirebaseAuth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         ButterKnife.bind(this);
 
@@ -125,8 +124,6 @@ public class SignupActivity extends AppCompatActivity {
                             String password = _passwordText.getText().toString();
 
                             register(email, password, lastName, firstName,level);
-
-
 
                             progressDialog.dismiss();
 

@@ -23,7 +23,6 @@
         <activity android:name="fr.miage.paris10.projetm1.helpu.BecomeHelperActivity" android:theme="@style/AppTheme.Dark.ActionBar" />
         <activity android:name="fr.miage.paris10.projetm1.helpu.ValidationActivity" android:theme="@style/AppTheme.Dark.ActionBar" />
         <activity android:name="fr.miage.paris10.projetm1.helpu.ResetPasswordActivity" android:theme="@style/AppTheme.Dark"/>
-        <activity android:name="fr.miage.paris10.projetm1.helpu.ProfileActivity" android:theme="@style/AppTheme.Dark"/>
 
     </application>
 
