@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.miage.paris10.projetm1.helpu">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/helpu_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name="fr.miage.paris10.projetm1.helpu.MainActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"
-            android:label="@string/app_name" >
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
                 <uses-permission android:name="android.permission.INTERNET" />
             </intent-filter>
         </activity>
-        <activity android:name="fr.miage.paris10.projetm1.helpu.LoginActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name="fr.miage.paris10.projetm1.helpu.SignupActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name="fr.miage.paris10.projetm1.helpu.BecomeHelperActivity" android:theme="@style/AppTheme.Dark.ActionBar" />
-        <activity android:name="fr.miage.paris10.projetm1.helpu.ValidationActivity" android:theme="@style/AppTheme.Dark.ActionBar" />
-        <activity android:name="fr.miage.paris10.projetm1.helpu.ResetPasswordActivity" android:theme="@style/AppTheme.Dark"/>
-
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".BecomeHelperActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar" />
+        <activity
+            android:name=".ValidationActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".ListeMessageActivity" />
+        <activity android:name=".ChatRoomActivity"></activity>
     </application>
 
 </manifest>
