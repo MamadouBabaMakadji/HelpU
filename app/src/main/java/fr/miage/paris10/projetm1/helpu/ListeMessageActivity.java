@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.google.firebase.database.DatabaseReference;
 
 public class ListeMessageActivity extends AppCompatActivity {
