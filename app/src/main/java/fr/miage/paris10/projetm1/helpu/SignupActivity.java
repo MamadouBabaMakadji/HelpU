@@ -69,6 +69,7 @@ public class SignupActivity extends AppCompatActivity {
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 signup();
 
             }
@@ -122,42 +123,17 @@ public class SignupActivity extends AppCompatActivity {
                             String level = _levelSpinner.getSelectedItem().toString();
                             String password = _passwordText.getText().toString();
 
-                            UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
-
-                            //if (user.isEmailVerified()){
-                            // TODO: Implement your own signup logic here.
-                            mFirebaseAuth.createUserWithEmailAndPassword(email, password)
-                                    .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (task.isSuccessful()) {
-                                                //mFirebaseAuth.getCurrentUser().sendEmailVerification();
-                                                sendVerificationEmail();
-                                               // loadLogInView();
-
-/*
-                                                if (mFirebaseAuth.getCurrentUser() != null) {
-                                                    finish();
-                                                    //startActivity(new Intent(getApplicationContext(), yourActivity.class));
-                                                    loadLogInView();
-                                                }
-*/
-                                                onSignupSuccess();
-                                            } else {
-                                                onSignupFailed();
-                                            }
-                                        }
-                                    });
-
-                            mDatabaseReference.child("user").push().setValue(userInformation);
+                            register(email, password, lastName, firstName,level);
 
                             progressDialog.dismiss();
+
                         }
+
                     }, 3000);
 
+
+
         }
-
-
     }
 
 
@@ -246,6 +222,32 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
+    public void createUser(String uid, String email, String firstName, String lastName, String level) {
+        UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
+        mDatabaseReference.child("users").child(uid).setValue(userInformation);
+    }
+
+
+    public void register(final String email, final String password,
+                         final String firstName, final String lastName, final String level) {
+        mFirebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            sendVerificationEmail();
+                            createUser(task.getResult().getUser().getUid(), email, firstName, lastName, level);
+
+                            onSignupSuccess();
+                        } else {
+                            onSignupFailed();
+                        }
+                    }
+                });
+    }
+
+
     public void sendVerificationEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -264,6 +266,7 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "Registered Successfully. Check your email", Toast.LENGTH_LONG).show();
                                 //startActivity(new Intent(getApplicationContext(), yourActivity.class));
                                loadLogInView();
+
                             }
                         }
                     });

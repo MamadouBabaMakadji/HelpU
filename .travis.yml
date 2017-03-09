@@ -1,48 +1,35 @@
 language: android
-
-# Specify jdk to run lambda expression
 jdk: oraclejdk8
+sudo: required
 
 before_install:
  - chmod +x gradlew
- 
 env:
-  matrix: 
-    secure: vCYJYYByXqzMMmpjPYGEXjyVlZKZ3watiUEgVlQWs7Q8hbbQW+BHCjSXrWSbFitKeFq0lKEBxQxN2TNSBd6Q+tbDFFceOXVIy+d7SnFiXXB6SdI57BIUFaEI1HH6gdWfL8A9WnzeyMBfUtw+KXZPyVN/C5FwX1DGkS79eX43Ha5/D/XoWxgD49FNt7SOarXEaQBzat6As4lm/fxo5BuSteyyTBhCNb1tYI8gXZ4Ej7CzE09vM+p2qDx1FhIuN6MJZr5oGGKraG97GaF/LEGayPwOjwV6Cz2ci8FkD99fFoDTvNzg/tC0No2TvQUNTyPXo/WIuVSKWrZC7zsFpz3NGjoVpo7IkgzN3f+9MpvhMY0vR8yHJ6irQ4PZZRYFYwN0F/zsTEqIS/IO1oDcfPfQYdJ1hUmy/9nRclPXfwk5elww6rrWo6V8TfVB9Kf1QRym2BEHxcRvEA3ipylvs2tiwBKiNswXxAKPm7UFY4Gyt2F97vyG6K5Sxhqn5wdHexI6A3FmBxi+D3aNQfOy+YiBkN9lnEBOew8mSVDctC5bBD7FpkU+sElvpF5nAGal7YaR7xtoT9yLJpF5/Vdyws2vRG3j1vCX/7xx8F7o08lGT6CxrX1LDjXDmtjMxYVZn3Tj6NjoCYd0e2d1nmTz502UpL5LaNWbk845k/ohURLjqr4=
   global:
-    - ANDROID_TARGET=android-25
+    - ANDROID_API_LEVEL=25
+    - EMULATOR_API_LEVEL=19
+    - ANDROID_BUILD_TOOLS_VERSION=25.0.1
     - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TRAVIS=1
 android:
   components:
     - tools
-    - build-tools-25.0.1
-    - android-25
-    # Google repositories
-    - extra-android-m2repository
-    - extra-google-m2repository
+    - platform-tools
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    # Specify both versions to resolve issue with missing image from google repository
+    - android-$ANDROID_API_LEVEL
+    - android-$EMULATOR_API_LEVEL
     - extra-android-support
-    # - extra-google-google_play_services
-    # Ressource(s) to run emulator during test
-    - sys-img-armeabi-v7a-android-25
-  licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+    - extra-android-m2repository
+    - extra-android-google_play_services
+    - extra-google-m2repository
 
-before_install:
-  - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >jpm4j.jar
-  - java -jar jpm4j.jar -u init
-  - ~/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
+# Launch android emulator and wait for it
+before_script:
+    - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI #--tag $ANDROID_TAG
+    - emulator -avd test -no-skin -no-audio -no-window &
+    - android-wait-for-emulator
+    - adb shell input keyevent 82 &
 
-# Build
 script:
-  - ./gradlew assembleAndroidTest
-  - ./gradlew test
-
-after_success:
-  - ~/jpm/bin/codacy-coverage-reporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
-  
-# Sync Slack
-notifications:
-  email: false
-  slack: m1miagecla:BL5y4dP6NKNyXpUbQYcjG4RJ
+  - ./gradlew jacocoTestReport coveralls

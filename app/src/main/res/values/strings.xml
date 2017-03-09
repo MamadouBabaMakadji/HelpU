@@ -2,6 +2,9 @@
     <string name="app_name">Help U</string>
     <string name="hello_word">Bienvenue dans Help U</string>
     <string name="action_settings">Settings</string>
+    <string name="action_profile">My profile</string>
+    <string name="messages">Messages</string>
+    <string name="send_message">Send</string>
 
     <!-- partie signup -->
     <string name="signup_address">Address</string>
@@ -37,7 +40,15 @@
     <string name="action_logout">Logout</string>
 
     <!--partie profile -->
-    <string name="UpdatePassword"> Update password</string>
+    <string name="updatePassword"> Update password</string>
+    <string name="updateEmail"> Update Email</string>
+    <string name="removeAccount"> Remove Account</string>
+    <string name="new_email"> New Email</string>
+    <string name="new_password"> New Password</string>
+    <string name="update"> Update</string>
+    <string name="send"> Send</string>
+    <string name="sendReset"> Send Password Reset email</string>
+
 
     <!--erreur -->
     <string name="login_error_message">Please make sure you enter an email address and password!</string>
