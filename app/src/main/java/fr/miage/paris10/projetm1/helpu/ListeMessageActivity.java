@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class ListeMessageActivity extends AppCompatActivity {
 
     ListView listView;
-    //String[] users_name = {"Mamadou", "Joan"};
     ArrayList db_userName = new ArrayList<String>() ;
     int icon = R.drawable.user;
     ListMessageAdapter adapter;
@@ -39,9 +38,7 @@ public class ListeMessageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListeMessageActivity.this, ChatRoomActivity.class);
-                //String item = ((TextView) view).getText().toString();
                 String item = listView.getItemAtPosition(position).toString();
-                //String item = listView.getSelectedItem().toString();
                 intent.putExtra("user",item);
                 startActivity(intent);
             }
