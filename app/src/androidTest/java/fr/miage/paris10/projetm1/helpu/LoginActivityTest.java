@@ -40,10 +40,10 @@ public class LoginActivityTest {
         onView(withId(R.id.input_email))
                 .perform(typeText("a@u-paris10.fr"), closeSoftKeyboard());
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
-  //      onView(withId(R.id.btn_login)).perform(click());
-  //             onView(withText("Login failed")).
-  //                     inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
-  //                     check(matches(isDisplayed()));
+        onView(withId(R.id.btn_login)).perform(click());
+               onView(withText("Login failed")).
+                       inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
+                       check(matches(isDisplayed()));
     }
     //TODO
 /*    @Test
