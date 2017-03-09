@@ -22,6 +22,14 @@ Elle permet aux étudiants d'aider ou bien de se faire aider en leur donnant la 
 ## Built With
 * [Gradle](https://gradle.org/)
 
+## Installation 
+
+HelpU utilise android sdk version 25.0.2. Gradle télécharge automatiquement le sdk si vous avez déjà accepté les licences avec le SDK manager et que soit : 
+
+  - votre variable d'environnement ANDROID_HOME est présente 
+  - un fichier local.properties est présent avec le chemin vers votre sdk local.
+
+Sinon vous pouvez télécharger le sdk grâce au sdk manager disponible https://developer.android.com/studio/index.html et configurer une variable ANDROID_HOME
 
 ## Authors
 
