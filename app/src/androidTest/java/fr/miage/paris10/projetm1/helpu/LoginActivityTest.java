@@ -31,6 +31,11 @@ public class LoginActivityTest {
         UserInformation u = new UserInformation("","","","");
         onView(withId(R.id.input_email))
                 .perform(typeText("33012900@u-paris10.fr"), closeSoftKeyboard());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
         onView(withId(R.id.btn_login)).perform(click());
     }
@@ -39,6 +44,11 @@ public class LoginActivityTest {
        LoginActivity activity = loginActivityRule.getActivity();
         onView(withId(R.id.input_email))
                 .perform(typeText("a@u-paris10.fr"), closeSoftKeyboard());
+       try {
+           Thread.sleep(500);
+       } catch (InterruptedException e) {
+           e.printStackTrace();
+       }
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
         onView(withId(R.id.btn_login)).perform(click());
                onView(withText("Login failed")).
