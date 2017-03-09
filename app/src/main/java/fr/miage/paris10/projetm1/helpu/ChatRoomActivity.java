@@ -49,7 +49,6 @@ public class ChatRoomActivity extends AppCompatActivity {
                         .getReference().child("message")
                         .push()
                         .setValue(message);
-                //messages.add(message.getMessage());
                 editText.setText("");
                 listView.setAdapter(adapter);
             }

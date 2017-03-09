@@ -35,8 +35,10 @@
         <activity
             android:name=".ResetPasswordActivity"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".ListeMessageActivity" />
-        <activity android:name=".ChatRoomActivity"></activity>
+        <activity android:name=".ListeMessageActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"/>
+        <activity android:name=".ChatRoomActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"/>
     </application>
 
 </manifest>
