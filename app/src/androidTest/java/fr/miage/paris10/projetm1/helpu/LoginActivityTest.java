@@ -28,9 +28,13 @@ public class LoginActivityTest {
 
     @Test
     public void testGoodLogIn() {
-        UserInformation u = new UserInformation("","","","");
         onView(withId(R.id.input_email))
                 .perform(typeText("33012900@u-paris10.fr"), closeSoftKeyboard());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
         onView(withId(R.id.btn_login)).perform(click());
     }
@@ -39,14 +43,19 @@ public class LoginActivityTest {
        LoginActivity activity = loginActivityRule.getActivity();
         onView(withId(R.id.input_email))
                 .perform(typeText("a@u-paris10.fr"), closeSoftKeyboard());
+       try {
+           Thread.sleep(500);
+       } catch (InterruptedException e) {
+           e.printStackTrace();
+       }
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
-  //      onView(withId(R.id.btn_login)).perform(click());
-  //             onView(withText("Login failed")).
-  //                     inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
-  //                     check(matches(isDisplayed()));
+        onView(withId(R.id.btn_login)).perform(click());
+               onView(withText("Login failed")).
+                       inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
+                       check(matches(isDisplayed()));
     }
     //TODO
-    @Test
+/*    @Test
     public void testLinkForgotPassword() {
        // onView(withId(R.id.link_reset_password)).perform(click());
     }
@@ -54,5 +63,5 @@ public class LoginActivityTest {
     @Test
     public void testLinkSignUp() {
       //  onView(withId(R.id.link_signup)).perform(click());
-    }
+    }*/
 }

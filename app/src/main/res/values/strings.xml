@@ -3,6 +3,8 @@
     <string name="hello_word">Bienvenue dans Help U</string>
     <string name="action_settings">Settings</string>
     <string name="action_profile">My profile</string>
+    <string name="messages">Messages</string>
+    <string name="send_message">Send</string>
 
     <!-- partie signup -->
     <string name="signup_address">Address</string>
@@ -46,7 +48,6 @@
     <string name="update"> Update</string>
     <string name="send"> Send</string>
     <string name="sendReset"> Send Password Reset email</string>
-
 
 
     <!--erreur -->

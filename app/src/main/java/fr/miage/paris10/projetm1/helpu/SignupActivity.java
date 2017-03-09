@@ -28,6 +28,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,11 +62,18 @@ public class SignupActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         ButterKnife.bind(this);
+        Data data = new Data(this);
+        InputStream inputStream = getResources().openRawResource(R.raw.nanterre);
+        data.insertData(inputStream);
+        final Spinner spinLevel = (Spinner) findViewById(R.id.spinner_level);
+        ArrayAdapter<CharSequence> adapterLevel = ArrayAdapter.createFromResource(this, R.array.level_array, android.R.layout.simple_spinner_item);
+        adapterLevel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinLevel.setAdapter(adapterLevel);
 
-        final Spinner spin = (Spinner) findViewById(R.id.spinner_level);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.level_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin.setAdapter(adapter);
+        final Spinner spinFilliere = (Spinner) findViewById(R.id.spinner_filliere);
+        ArrayList<String> list=data.getAllFilliere();
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, list);
+        spinFilliere.setAdapter(adapter);
 
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
