@@ -28,7 +28,6 @@ public class LoginActivityTest {
 
     @Test
     public void testGoodLogIn() {
-        UserInformation u = new UserInformation("","","","");
         onView(withId(R.id.input_email))
                 .perform(typeText("33012900@u-paris10.fr"), closeSoftKeyboard());
         try {
