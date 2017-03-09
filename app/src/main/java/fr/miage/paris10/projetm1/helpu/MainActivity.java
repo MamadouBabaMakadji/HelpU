@@ -99,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
             mFirebaseAuth.signOut();
             loadLogInView();
         }
+        if (id == R.id.action_messages) {
+            Intent intent = new Intent(this,ListeMessageActivity.class);
+            startActivity(intent);
+        }
 
 
         return super.onOptionsItemSelected(item);
