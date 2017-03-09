@@ -6,22 +6,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class ListeMessageActivity extends AppCompatActivity {
 
     ListView listView;
-    String[] users_name = {"Mamadou", "Joan"};
-    //ArrayList<String> users_name = new ArrayList<>() ;
+    //String[] users_name = {"Mamadou", "Joan"};
+    ArrayList db_userName = new ArrayList<String>() ;
     int icon = R.drawable.user;
     ListMessageAdapter adapter;
+    private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_message);
         listView = (ListView) findViewById(R.id.list_msg);
-        adapter = new ListMessageAdapter(ListeMessageActivity.this,users_name);
+        adapter = new ListMessageAdapter(ListeMessageActivity.this,db_userName);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -34,16 +43,15 @@ public class ListeMessageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*databaseReference = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
+        databaseReference = databaseReference.child("/users");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getValue(String.class);
-                //String lesNoms = databaseReference.child("firstName").toString();
-                //users_name.add(lesNoms);
-                users_name.add(value);
+                UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                db_userName.add(userInformation.getFirstName());
                 adapter.notifyDataSetChanged();
-                listView.setAdapter(adapter);
             }
 
             @Override
@@ -65,6 +73,6 @@ public class ListeMessageActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
     }
 }
