@@ -62,6 +62,23 @@
         </android.support.design.widget.TextInputLayout>
 
 
+        <!-- UFR label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="UFR :">
+
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_ufr" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
         <!-- Filliere label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

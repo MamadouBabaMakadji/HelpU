@@ -27,7 +27,7 @@ public class Data extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Nanterre";
     public static final String TABLE_PRO = "Resultat";
     public static final int DATABASE_VERSION = 1;
-    public static final String CREATE_RPO = "CREATE TABLE IF NOT EXISTS "+ TABLE_PRO+ "( ID integer primary key autoincrement, EC TEXT, FILLIERE TEXT, SEMESTRE TEXT)";
+    public static final String CREATE_RPO = "CREATE TABLE IF NOT EXISTS "+ TABLE_PRO+ "( ID integer primary key autoincrement, EC TEXT, SEMESTRE TEXT, UFR TEXT, FILLIERE TEXT  )";
 
     public static final String DELETE_PRO="DROP TABLE IF EXISTS " + TABLE_PRO;
 
@@ -61,7 +61,7 @@ public class Data extends SQLiteOpenHelper {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
             String line = "";
             String tableName = TABLE_PRO;
-            String columns = "EC, FILLIERE, SEMESTRE";
+            String columns = "EC, SEMESTRE,UFR, FILLIERE ";
             String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
             String str2 = ");";
             // Start the transaction.
@@ -71,7 +71,7 @@ public class Data extends SQLiteOpenHelper {
                 while (( line = buffer.readLine()) != null) {
                     String[] str = line.split(",");
 
-                    String requette = str1 + "'" +str[0] + "', '" + str[1] + "', '" + str[2] + "'"+ str2;
+                    String requette = str1 + "'" +str[0] + "', '" + str[1] + "', '" + str[2] + "'" +  "', '" + str[3] + "'" + str2;
                     Log.d(Data.class.getSimpleName(), requette);
                     db.execSQL(requette);
                 }
@@ -89,8 +89,7 @@ public class Data extends SQLiteOpenHelper {
 
     }
 
-
-    public ArrayList<String> getAllFilliere(){
+    public ArrayList<String> getAllUFR(){
 
         ArrayList<String> list=new ArrayList<String>();
         // Open the database for reading
@@ -102,7 +101,55 @@ public class Data extends SQLiteOpenHelper {
         try
         {
 
-            String selectQuery = "SELECT DISTINCT FILLIERE FROM "+ TABLE_PRO;
+            String selectQuery = "SELECT DISTINCT UFR FROM "+ TABLE_PRO;
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if(cursor.getCount() >0)
+
+            {
+                while (cursor.moveToNext()) {
+                    // Add province name to arraylist
+                    String ufr= cursor.getString(cursor.getColumnIndex("UFR"));
+                    list.add(ufr);
+
+                }
+
+
+            }
+            db.setTransactionSuccessful();
+
+        }
+        catch (SQLiteException e)
+        {
+            e.printStackTrace();
+
+        }
+        finally
+        {
+            db.endTransaction();
+            // End the transaction.
+            db.close();
+
+            // Close database
+        }
+        return list;
+
+
+    }
+
+
+    public ArrayList<String> getAllFilliere(String ufr){
+
+        ArrayList<String> list=new ArrayList<String>();
+        // Open the database for reading
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Start the transaction.
+        db.beginTransaction();
+
+
+        try
+        {
+
+            String selectQuery = "SELECT DISTINCT FILLIERE FROM "+ TABLE_PRO +" WHERE UFR = "+ufr;
             Cursor cursor = db.rawQuery(selectQuery, null);
             if(cursor.getCount() >0)
 

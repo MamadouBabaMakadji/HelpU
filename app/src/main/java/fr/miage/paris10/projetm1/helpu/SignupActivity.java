@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
+    private Data data = new Data(this);
 
     @Bind(R.id.input_firstName) EditText _firstNameText;
     @Bind(R.id.input_lastName) EditText _lastNameText;
@@ -62,18 +64,40 @@ public class SignupActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         ButterKnife.bind(this);
-        Data data = new Data(this);
-        InputStream inputStream = getResources().openRawResource(R.raw.nanterre);
+
+        InputStream inputStream = getResources().openRawResource(R.raw.nanterrev2);
         data.insertData(inputStream);
+        final Spinner spinFilliere = (Spinner) findViewById(R.id.spinner_filliere);
+        final Spinner spinUfr = (Spinner) findViewById(R.id.spinner_ufr);
+        ArrayList<String> listUfr=data.getAllUFR();
+        ArrayAdapter<String> adapterUfr=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listUfr);
+        spinUfr.setAdapter(adapterUfr);
+        spinUfr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(!parent.getItemAtPosition(position).toString().isEmpty()){
+
+                }
+                ArrayList<String> listFilliere=data.getAllFilliere(parent.getItemAtPosition(position).toString());
+                ArrayAdapter<String> adapterFilliere=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listFilliere);
+                spinFilliere.setAdapter(adapterFilliere);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
         final Spinner spinLevel = (Spinner) findViewById(R.id.spinner_level);
         ArrayAdapter<CharSequence> adapterLevel = ArrayAdapter.createFromResource(this, R.array.level_array, android.R.layout.simple_spinner_item);
         adapterLevel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinLevel.setAdapter(adapterLevel);
 
-        final Spinner spinFilliere = (Spinner) findViewById(R.id.spinner_filliere);
-        ArrayList<String> list=data.getAllFilliere();
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, list);
-        spinFilliere.setAdapter(adapter);
 
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
