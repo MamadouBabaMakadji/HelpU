@@ -69,19 +69,25 @@ public class SignupActivity extends AppCompatActivity {
         data.insertData(inputStream);
         final Spinner spinFilliere = (Spinner) findViewById(R.id.spinner_filliere);
         final Spinner spinUfr = (Spinner) findViewById(R.id.spinner_ufr);
-        ArrayList<String> listUfr=data.getAllUFR();
+        ArrayList<String> listUfr= new ArrayList<String>();
+         listUfr.add("ARTS LETTRES LANGUES");
+        listUfr.add("DROIT ECONOMIE GESTION");
+        listUfr.add("SCIENCES ET TECHNIQUES DES ACTIVITES PHYSIQUES ET SPORTIVES");
+        listUfr.add("SCIENCES HUMAINES ET SOCIALES");
+        listUfr.add("SCIENCES TECHNOLOGIES ET SANTE");
         ArrayAdapter<String> adapterUfr=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listUfr);
         spinUfr.setAdapter(adapterUfr);
         spinUfr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                if(!parent.getItemAtPosition(position).toString().isEmpty()){
-
+                if(!parent.getItemAtPosition(position).toString().isEmpty())
+                {
+                    ArrayList<String> listFilliere=data.getAllFilliere(parent.getItemAtPosition(position).toString());
+                    ArrayAdapter<String> adapterFilliere=new ArrayAdapter<String>(SignupActivity.this, R.layout.spinner_layout, R.id.text, listFilliere);
+                    spinFilliere.setAdapter(adapterFilliere);
+                    adapterFilliere.notifyDataSetChanged();
                 }
-                ArrayList<String> listFilliere=data.getAllFilliere(parent.getItemAtPosition(position).toString());
-                ArrayAdapter<String> adapterFilliere=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listFilliere);
-                spinFilliere.setAdapter(adapterFilliere);
+
             }
 
             @Override

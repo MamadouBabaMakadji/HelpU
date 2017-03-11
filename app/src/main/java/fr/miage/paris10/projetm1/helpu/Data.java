@@ -71,8 +71,8 @@ public class Data extends SQLiteOpenHelper {
                 while (( line = buffer.readLine()) != null) {
                     String[] str = line.split(",");
 
-                    String requette = str1 + "'" +str[0] + "', '" + str[1] + "', '" + str[2] + "'" +  "', '" + str[3] + "'" + str2;
-                    Log.d(Data.class.getSimpleName(), requette);
+                    String requette = str1 + "'" +str[0] + "', '" + str[1] + "', '" + str[2]  +  "', '" + str[3] + "'" + str2;
+               //     Log.d(Data.class.getSimpleName(), requette);
                     db.execSQL(requette);
                 }
                 db.setTransactionSuccessful();
@@ -101,14 +101,14 @@ public class Data extends SQLiteOpenHelper {
         try
         {
 
-            String selectQuery = "SELECT DISTINCT UFR FROM "+ TABLE_PRO;
+            String selectQuery = "SELECT UFR FROM "+ TABLE_PRO +" GROUP BY UFR";
             Cursor cursor = db.rawQuery(selectQuery, null);
             if(cursor.getCount() >0)
 
             {
                 while (cursor.moveToNext()) {
-                    // Add province name to arraylist
                     String ufr= cursor.getString(cursor.getColumnIndex("UFR"));
+                       Log.d(Data.class.getSimpleName(), ufr);
                     list.add(ufr);
 
                 }
@@ -149,7 +149,7 @@ public class Data extends SQLiteOpenHelper {
         try
         {
 
-            String selectQuery = "SELECT DISTINCT FILLIERE FROM "+ TABLE_PRO +" WHERE UFR = "+ufr;
+            String selectQuery = "SELECT DISTINCT FILLIERE FROM "+ TABLE_PRO +" WHERE UFR = '"+ufr +"'";
             Cursor cursor = db.rawQuery(selectQuery, null);
             if(cursor.getCount() >0)
 
