@@ -5,13 +5,20 @@ package fr.miage.paris10.projetm1.helpu;
  */
 
 public class Message {
-    String from;
-    String message;
+    private String from;
+    private String destinataire;
+    private String message;
+
+    public Message(String from, String destinataire, String message) {
+        this.from = from;
+        this.destinataire = destinataire;
+        this.message = message;
+    }
 
     public Message() {
     }
-    public Message(String from, String message) {
-        this.from = from;
+
+    public Message(String message) {
         this.message = message;
     }
 
@@ -21,6 +28,14 @@ public class Message {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getDestinataire() {
+        return destinataire;
+    }
+
+    public void setDestinataire(String destinataire) {
+        this.destinataire = destinataire;
     }
 
     public String getMessage() {
