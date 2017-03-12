@@ -2,7 +2,6 @@ package fr.miage.paris10.projetm1.helpu;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -10,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -191,7 +189,7 @@ public class Data extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         // Start the transaction.
         db.beginTransaction();
-        int semestre = 0;
+        int semestre = 9;
         if (level.equals("L1")){
             semestre = 2;
         }
@@ -213,7 +211,7 @@ public class Data extends SQLiteOpenHelper {
         try
         {
 
-            String selectQuery = "SELECT EC FROM "+ TABLE_PRO +" FILLIERE = " + filliere +" AND " + "SEMESTRE" + semestre;
+            String selectQuery = "SELECT EC FROM "+ TABLE_PRO +" WHERE FILLIERE = '" + filliere +"' AND  SEMESTRE = '" + semestre + "'" ;
             Cursor cursor = db.rawQuery(selectQuery, null);
             if(cursor.getCount() >0)
 

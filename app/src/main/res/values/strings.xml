@@ -39,6 +39,11 @@
     <string name="thanks">Thanks for your help.We will contact you when someone needs you. </string>
     <string name="action_logout">Logout</string>
 
+    <!-- partie Search Helper -->
+    <string name="SearchHelp"> In which course would you like help ?</string>
+    <string name="Research">Research</string>
+    <string name="requestAccepted">Your request has been accepted. We will contact you as soon as possible. </string>
+
     <!--partie profile -->
     <string name="updatePassword"> Update password</string>
     <string name="updateEmail"> Update Email</string>

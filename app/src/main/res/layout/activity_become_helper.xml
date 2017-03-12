@@ -22,15 +22,19 @@
       android:text="@string/beHelper"
       android:layout_weight="1" />
 
-  <EditText
+
+  <!-- EC label -->
+  <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:inputType="textPersonName"
-      android:ems="10"
-      android:id="@+id/input_ec"
-      android:layout_weight="1"
-      android:layout_centerVertical="true"
-      android:layout_centerHorizontal="true" />
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      android:text="EC:">
+
+
+  </android.support.design.widget.TextInputLayout>
+
+
 
   <Button
       android:text="@string/Want"
@@ -40,5 +44,13 @@
       android:layout_alignParentBottom="true"
       android:layout_alignParentEnd="true"
       android:layout_marginBottom="67dp" />
+
+  <Spinner
+      android:id="@+id/spinner_BecomeHelper_ec"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/button_valider"
+      android:layout_alignParentStart="true"
+      android:layout_marginBottom="169dp" />
 
 </RelativeLayout>
