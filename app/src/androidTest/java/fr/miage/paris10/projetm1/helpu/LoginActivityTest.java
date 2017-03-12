@@ -36,7 +36,7 @@ public class LoginActivityTest {
 
 
     @Test
-    public void testGoodLogIn() {
+    public void testGoodLogIn()  throws InterruptedException {
         onView(withId(R.id.input_email))
                 .perform(typeText("33012900@u-paris10.fr"), closeSoftKeyboard());
         Thread.sleep(1000);
@@ -45,7 +45,7 @@ public class LoginActivityTest {
         onView(withId(R.id.btn_login)).perform(click());
     }
    @Test
-    public void testFalseLogIn() {
+    public void testFalseLogIn() throws InterruptedException {
        LoginActivity activity = loginActivityRule.getActivity();
         onView(withId(R.id.input_email))
                 .perform(typeText("a@u-paris10.fr"), closeSoftKeyboard());
