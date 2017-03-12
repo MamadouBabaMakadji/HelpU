@@ -53,7 +53,6 @@ public class Data extends SQLiteOpenHelper {
 
         // Open the database for writing
         SQLiteDatabase db = this.getWritableDatabase();
-        FileReader file = null;
 
         try {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
@@ -64,7 +63,6 @@ public class Data extends SQLiteOpenHelper {
             String str2 = ");";
             // Start the transaction.
             db.beginTransaction();
-            ContentValues values;
 
                 while (( line = buffer.readLine()) != null) {
                     String[] str = line.split(",");
@@ -190,19 +188,19 @@ public class Data extends SQLiteOpenHelper {
         // Start the transaction.
         db.beginTransaction();
         int semestre = 9;
-        if (level.equals("L1")){
+        if ("L1".equals(level)){
             semestre = 2;
         }
-        else if (level.equals("L2")){
+        else if ("L2".equals(level)){
             semestre = 4;
         }
-        else if (level.equals("L3")){
+        else if ("L3".equals(level)){
             semestre = 6;
         }
-        else if (level.equals("M1")){
+        else if ("M1".equals(level)){
             semestre = 8;
         }
-        else if (level.equals("M2")){
+        else if ("M2".equals(level)){
             semestre = 0;
         }
 

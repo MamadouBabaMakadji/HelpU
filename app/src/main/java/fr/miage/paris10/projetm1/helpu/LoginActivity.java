@@ -154,13 +154,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_SIGNUP && resultCode == RESULT_OK) {
 
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
-            }
+
         }
     }
 
@@ -216,10 +215,7 @@ public class LoginActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) { // connected to the internet
-            return true;
-        }
-        return false;
+        return (activeNetwork != null && activeNetwork.isConnected());
 
     }
 
