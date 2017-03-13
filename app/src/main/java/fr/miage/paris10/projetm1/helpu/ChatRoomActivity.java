@@ -25,15 +25,15 @@ public class ChatRoomActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List messages = new ArrayList<String>();
-    private Button btn_send;
-    private EditText editText;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
         Intent intent = getIntent();
+        DatabaseReference databaseReference;
+        EditText editText;
+        FirebaseDatabase database;
+        Button btn_send;
         listView = (ListView) findViewById(R.id.listViewConversations);
         to_userName = intent.getStringExtra("user");
         setTitle(to_userName);
