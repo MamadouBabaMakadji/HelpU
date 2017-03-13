@@ -19,12 +19,9 @@ import java.util.ArrayList;
 
 public class ListeMessageActivity extends AppCompatActivity {
 
-    ListView listView;
-    ArrayList db_userName = new ArrayList<String>() ;
-    int icon = R.drawable.user;
-    ListMessageAdapter adapter;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    private ListView listView;
+    private ArrayList db_userName = new ArrayList<String>() ;
+    private ListMessageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +40,8 @@ public class ListeMessageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
         databaseReference = databaseReference.child("/users");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -53,7 +50,7 @@ public class ListeMessageActivity extends AppCompatActivity {
                 String currentlyUser = user.getUid();
                 if(!dataSnapshot.getKey().equals(currentlyUser)){
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                    db_userName.add(userInformation.getFirstName());
+                    db_userName.add(userInformation.getCompletName());
                     adapter.notifyDataSetChanged();
                 }
             }
