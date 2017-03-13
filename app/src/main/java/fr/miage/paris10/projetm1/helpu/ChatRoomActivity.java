@@ -23,10 +23,10 @@ public class ChatRoomActivity extends AppCompatActivity {
     private String to_userName;
     private String destinataireID;
     ListView listView;
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
     List messages = new ArrayList<String>();
-    Button btn_send;
-    EditText editText;
+    private Button btn_send;
+    private EditText editText;
     DatabaseReference databaseReference;
     FirebaseDatabase database;
     @Override

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ListMessageAdapter extends ArrayAdapter<String> {
 
-    Activity context;
+    private Activity context;
     //ArrayList users_name ;
     ArrayList users_name ;
     private int icon = R.drawable.user;
