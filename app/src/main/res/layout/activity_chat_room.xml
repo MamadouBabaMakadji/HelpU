@@ -17,7 +17,7 @@
         android:layout_alignTop="@+id/champText_msg"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="18dp"
-        android:id="@+id/button_send" />
+        android:id="@+id/btn_send" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -27,14 +27,14 @@
         android:layout_marginBottom="11dp"
         android:id="@+id/champText_msg"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/button_send"
+        android:layout_toStartOf="@+id/btn_send"
         android:layout_marginEnd="20dp" />
 
     <ListView
         android:id="@+id/listViewConversations"
         android:layout_width="match_parent"
         android:layout_height="388dp"
-        android:layout_above="@+id/button_send"
+        android:layout_above="@+id/btn_send"
         android:layout_alignParentStart="true" />
 
 

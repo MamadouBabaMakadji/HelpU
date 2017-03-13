@@ -38,6 +38,9 @@ public class UserInformation {
     }
 
     public String getFirstName() {
+        return firstName;
+    }
+    public String getCompletName() {
         return lastName+" "+firstName;
     }
 
