@@ -1,5 +1,7 @@
 package fr.miage.paris10.projetm1.helpu;
 
+import android.util.Log;
+
 /**
  * Created by MBM on 07/03/2017.
  */

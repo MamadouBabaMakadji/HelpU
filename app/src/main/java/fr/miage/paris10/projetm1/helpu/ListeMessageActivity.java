@@ -53,7 +53,7 @@ public class ListeMessageActivity extends AppCompatActivity {
                 String currentlyUser = user.getUid();
                 if(!dataSnapshot.getKey().equals(currentlyUser)){
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                    db_userName.add(userInformation.getFirstName());
+                    db_userName.add(userInformation.getCompletName());
                     adapter.notifyDataSetChanged();
                 }
             }
