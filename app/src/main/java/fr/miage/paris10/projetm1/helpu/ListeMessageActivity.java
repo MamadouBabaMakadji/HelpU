@@ -23,7 +23,6 @@ public class ListeMessageActivity extends AppCompatActivity {
     private ArrayList db_userName = new ArrayList<String>() ;
     private ListMessageAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
