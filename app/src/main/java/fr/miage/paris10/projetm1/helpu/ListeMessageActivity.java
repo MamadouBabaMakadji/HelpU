@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class ListeMessageActivity extends AppCompatActivity {
 
-    ListView listView;
+    private ListView listView;
     private ArrayList db_userName = new ArrayList<String>() ;
     private int icon = R.drawable.user;
-    ListMessageAdapter adapter;
+    private ListMessageAdapter adapter;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 

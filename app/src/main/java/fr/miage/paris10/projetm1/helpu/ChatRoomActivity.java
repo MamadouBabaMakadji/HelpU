@@ -22,13 +22,13 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     private String to_userName;
     private String destinataireID;
-    ListView listView;
+    private ListView listView;
     private ArrayAdapter<String> adapter;
-    List messages = new ArrayList<String>();
+    private List messages = new ArrayList<String>();
     private Button btn_send;
     private EditText editText;
-    DatabaseReference databaseReference;
-    FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
