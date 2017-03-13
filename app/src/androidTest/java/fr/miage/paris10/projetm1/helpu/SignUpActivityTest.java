@@ -48,6 +48,6 @@ public class SignUpActivityTest {
         onView(withId(R.id.input_reEnterPassword)).perform(typeText("azerty"), closeSoftKeyboard());
        Thread.sleep(500);
 
-        onView(withId(R.id.link_login)).perform(click());
+      //  onView(withId(R.id.link_login)).perform(click());
     }
 }
