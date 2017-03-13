@@ -24,14 +24,14 @@ public class LoginActivityTest {
     public void testGoodLogIn()  throws InterruptedException {
         onView(withId(R.id.input_email))
                 .perform(typeText("33012900@u-paris10.fr"), closeSoftKeyboard());
-
+        Thread.sleep(1000);
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
         Thread.sleep(500);
         onView(withId(R.id.btn_login)).perform(click());
     }
    @Test
     public void testFalseLogIn() throws InterruptedException {
-       LoginActivity activity = loginActivityRule.getActivity();
+      // LoginActivity activity = loginActivityRule.getActivity();
         onView(withId(R.id.input_email))
                 .perform(typeText("a@u-paris10.fr"), closeSoftKeyboard());
         Thread.sleep(1000);
