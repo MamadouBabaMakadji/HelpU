@@ -21,10 +21,8 @@ public class ListeMessageActivity extends AppCompatActivity {
 
     private ListView listView;
     private ArrayList db_userName = new ArrayList<String>() ;
-    private int icon = R.drawable.user;
     private ListMessageAdapter adapter;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +41,8 @@ public class ListeMessageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
         databaseReference = databaseReference.child("/users");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override

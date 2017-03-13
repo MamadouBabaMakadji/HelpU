@@ -30,9 +30,6 @@ public class ChatRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
         Intent intent = getIntent();
-        DatabaseReference databaseReference;
-        EditText editText;
-        FirebaseDatabase database;
         Button btn_send;
         listView = (ListView) findViewById(R.id.listViewConversations);
         to_userName = intent.getStringExtra("user");
@@ -40,8 +37,8 @@ public class ChatRoomActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(ChatRoomActivity.this,android.R.layout.simple_list_item_1, messages);
         listView.setAdapter(adapter);
         btn_send = (Button) findViewById(R.id.btn_send);
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
         databaseReference = databaseReference.child("/users");
         databaseReference.addChildEventListener(new ChildEventListener() {
                                                     @Override
@@ -75,7 +72,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText = (EditText) findViewById(R.id.champText_msg);
+                EditText editText = (EditText) findViewById(R.id.champText_msg);
                 String msg = editText.getText().toString();
                 String from = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Message message = new Message(from,destinataireID,msg);
