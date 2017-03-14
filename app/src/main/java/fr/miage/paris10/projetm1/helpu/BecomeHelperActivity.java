@@ -25,7 +25,9 @@ public class BecomeHelperActivity extends AppCompatActivity{
 
       //TODO
      final UserInformation user = new UserInformation("Yc6vaVgfUnW4C0CxLKE6cdINJCD2","32039713@u-paris10.fr","mamadou","makadji baba","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
-      //final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","DROIT ECONOMIE GESTION","Finance");
+    //  final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
+   // final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","SCIENCES HUMAINES ET SOCIALES","Psychologie");
+    //final UserInformation user = new UserInformation("Yc6vaVgfUnW4C0CxLKE6cdINJCD2","32039713@u-paris10.fr","mamadou","makadji baba","M1","SCIENCES HUMAINES ET SOCIALES","Psychologie");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_become_helper);
       Data data = new Data(this);
@@ -60,7 +62,9 @@ public class BecomeHelperActivity extends AppCompatActivity{
         else if (tmp.contains("]")){
           tmp = spinEC.getSelectedItem().toString().replace("]","");
         }
-        mDatabaseReference.child("Become Helper").child(user.getFilliere()).child(tmp).child(user.getId()).setValue(bec);
+
+
+        mDatabaseReference.child("BecomeHelper").child(user.getFilliere()).child(tmp).child(user.getId()).setValue(bec);
 
         startActivity(intent);
       }

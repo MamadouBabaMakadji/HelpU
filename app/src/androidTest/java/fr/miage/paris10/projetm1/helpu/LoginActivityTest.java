@@ -36,8 +36,8 @@ public class LoginActivityTest {
                 .perform(typeText("a@u-paris10.fr"), closeSoftKeyboard());
         Thread.sleep(1000);
         onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
-     //   Thread.sleep(500);
-    //    onView(withId(R.id.btn_login)).perform(click());
+        Thread.sleep(500);
+        onView(withId(R.id.btn_login)).perform(click());
       //         onView(withText("Login failed")).
        //                inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).
        //                check(matches(isDisplayed()));
