@@ -70,6 +70,7 @@ public class SignupActivity extends AppCompatActivity {
         final Spinner spinFilliere = (Spinner) findViewById(R.id.spinner_filliere);
         final Spinner spinUfr = (Spinner) findViewById(R.id.spinner_ufr);
         ArrayList<String> listUfr= new ArrayList<String>();
+        listUfr.add("Select UFR");
          listUfr.add("ARTS LETTRES LANGUES");
         listUfr.add("DROIT ECONOMIE GESTION");
         listUfr.add("SCIENCES ET TECHNIQUES DES ACTIVITES PHYSIQUES ET SPORTIVES");
@@ -83,6 +84,7 @@ public class SignupActivity extends AppCompatActivity {
                 if(!parent.getItemAtPosition(position).toString().isEmpty())
                 {
                     ArrayList<String> listFilliere=data.getAllFilliere(parent.getItemAtPosition(position).toString());
+                    listFilliere.add(0,"Select Filliere");
                     ArrayAdapter<String> adapterFilliere=new ArrayAdapter<String>(SignupActivity.this, R.layout.spinner_layout, R.id.text, listFilliere);
                     spinFilliere.setAdapter(adapterFilliere);
                     adapterFilliere.notifyDataSetChanged();

@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         _resetPasswordLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+                startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
             }
         });
 
@@ -124,10 +124,15 @@ public class LoginActivity extends AppCompatActivity {
 
                                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                                 if( user.isEmailVerified()){
-                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    startActivity(intent);
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    startActivityForResult(intent, REQUEST_SIGNUP);
+                                                    finish();
+                                                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+                                              //      Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                              //      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                              //      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                              //      startActivity(intent);
                                                     onLoginSuccess();
                                                 }
                                                 else{

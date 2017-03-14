@@ -6,10 +6,14 @@ package fr.miage.paris10.projetm1.helpu;
 
 public class UserInformation {
 
+    private String id;
     public String email;
     public String lastName;
     public String firstName;
     public String level;
+    private String ufr;
+    private String filliere;
+
 
     public UserInformation() {
     }
@@ -19,6 +23,40 @@ public class UserInformation {
         this.lastName = lastName;
         this.firstName = firstName;
         this.level = level;
+    }
+
+    public UserInformation(String id, String email, String lastName, String firstName, String level, String ufr, String filliere) {
+        this.id = id;
+        this.email = email;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.level = level;
+        this.ufr = ufr;
+        this.filliere = filliere;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUfr() {
+        return ufr;
+    }
+
+    public void setUfr(String ufr) {
+        this.ufr = ufr;
+    }
+
+    public String getFilliere() {
+        return filliere;
+    }
+
+    public void setFilliere(String filliere) {
+        this.filliere = filliere;
     }
 
     public String getEmail() {
