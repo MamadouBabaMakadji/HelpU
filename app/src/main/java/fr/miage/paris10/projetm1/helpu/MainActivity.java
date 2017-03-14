@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private Button btn_help;
+    private Button btn_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(i);
                         }
                     });
+                    btn_search = (Button) findViewById(R.id.button_search);
+                    btn_search.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(MainActivity.this, SearchHelperActivity.class);
+                            startActivity(i);
+                        }
+                    });
+
                 }
             }
         };
@@ -97,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout) {
             mFirebaseAuth.signOut();
             loadLogInView();
+        }
+        if (id == R.id.action_messages) {
+            Intent intent = new Intent(this,ListeMessageActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
