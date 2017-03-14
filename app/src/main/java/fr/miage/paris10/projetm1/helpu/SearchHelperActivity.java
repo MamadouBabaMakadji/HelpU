@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class SearchHelperActivity extends AppCompatActivity {
 
-    private Button btn_valider;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,7 @@ public class SearchHelperActivity extends AppCompatActivity {
         ArrayList<String> listEc= data.getEc(filliere,level);
         ArrayAdapter<String> adapterEc=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listEc);
         spinEC.setAdapter(adapterEc);
-
-        btn_valider = (Button) findViewById(R.id.button_valider);
+        Button btn_valider = (Button) findViewById(R.id.button_valider);
 
         btn_valider.setOnClickListener(new View.OnClickListener() {
             @Override

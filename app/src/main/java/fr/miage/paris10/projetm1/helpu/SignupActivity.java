@@ -255,10 +255,7 @@ public class SignupActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) { // connected to the internet
-            return true;
-        }
-        return false;
+        return (activeNetwork != null && activeNetwork.isConnected());
 
     }
 

@@ -20,22 +20,34 @@ import static org.hamcrest.Matchers.is;
  * Created by david on 07/03/2017.
  */
 
-//@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4.class)
 public class SignUpActivityTest {
-   /* @Rule
+    @Rule
     public ActivityTestRule<SignupActivity> signUpActivityRule  = new ActivityTestRule<>(SignupActivity.class);
 
 
    @Test
-    public void testGoodLogIn() {
+    public void testGoodLogIn() throws InterruptedException {
         onView(withId(R.id.input_firstName)).perform(typeText("test"), closeSoftKeyboard());
+       Thread.sleep(500);
         onView(withId(R.id.input_lastName)).perform(typeText("test"), closeSoftKeyboard());
+       Thread.sleep(500);
         onView(withId(R.id.input_email)).perform(typeText("test@u-paris10.fr"), closeSoftKeyboard());
-        onView(withId(R.id.spinner_level)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("M1"))).perform(click());
-        onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
-        onView(withId(R.id.input_reEnterPassword)).perform(typeText("azerty"), closeSoftKeyboard());
+       Thread.sleep(500);
 
-        onView(withId(R.id.link_login)).perform(click());
-    }*/
+       onView(withId(R.id.spinner_ufr)).perform(click());
+       onData(allOf(is(instanceOf(String.class)), is("SCIENCES TECHNOLOGIES ET SANTE"))).perform(click());
+       onView(withId(R.id.spinner_filliere)).perform(click());
+       onData(allOf(is(instanceOf(String.class)), is("STAPS"))).perform(click());
+       onView(withId(R.id.spinner_level)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("M1"))).perform(click());
+
+
+        onView(withId(R.id.input_password)).perform(typeText("azerty"), closeSoftKeyboard());
+       Thread.sleep(500);
+        onView(withId(R.id.input_reEnterPassword)).perform(typeText("azerty"), closeSoftKeyboard());
+       Thread.sleep(500);
+
+      //  onView(withId(R.id.link_login)).perform(click());
+    }
 }
