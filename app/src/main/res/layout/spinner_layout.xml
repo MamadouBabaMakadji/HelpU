@@ -11,7 +11,7 @@
         android:paddingLeft="5sp"
         android:paddingBottom="10sp"
         android:paddingTop="10sp"
-
+        android:textColor="@color/iron"
         >
 
     </TextView>

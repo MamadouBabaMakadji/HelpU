@@ -46,7 +46,7 @@
         android:layout_marginBottom="67dp" />
 
     <Spinner
-        android:id="@+id/spinner_BecomeHelper_ec"
+        android:id="@+id/spinner_SearchHelper_ec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button_valider"

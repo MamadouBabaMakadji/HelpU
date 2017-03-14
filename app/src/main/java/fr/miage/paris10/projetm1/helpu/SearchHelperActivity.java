@@ -28,9 +28,9 @@ public class SearchHelperActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_become_helper);
+        setContentView(R.layout.activity_search_helper);
         Data data = new Data(this);
-        final Spinner spinEC = (Spinner) findViewById(R.id.spinner_BecomeHelper_ec);
+        final Spinner spinEC = (Spinner) findViewById(R.id.spinner_SearchHelper_ec);
         //le level n'est pas pris en compte
         ArrayList<String> listEc= data.getEc(filliere,level);
         ArrayAdapter<String> adapterEc=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listEc);
