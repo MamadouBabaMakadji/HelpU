@@ -27,6 +27,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,8 +43,10 @@ import butterknife.Bind;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
+    private UserInformation u = new UserInformation();
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseReference;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
@@ -52,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize FirebaseAuth
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
 
         ButterKnife.bind(this);
@@ -114,8 +123,11 @@ public class LoginActivity extends AppCompatActivity {
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
+
                             String email = _emailText.getText().toString();
                             String password = _passwordText.getText().toString();
+                           // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                         //   final String currentlyUser = user.getUid();
                             mFirebaseAuth.signInWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                         @Override
@@ -124,16 +136,49 @@ public class LoginActivity extends AppCompatActivity {
 
                                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                                 if( user.isEmailVerified()){
-                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                    startActivityForResult(intent, REQUEST_SIGNUP);
+                                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                                    DatabaseReference refData =  database.getReference();
+                                                    refData.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                            for (DataSnapshot data : dataSnapshot.getChildren() ) {
+                                                                if(data.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                                                  u =  data.getValue(UserInformation.class);
+                                                                    u.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                                                }
+
+                                                            }
+
+                                                       //     }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+
+
+
+
+
+
+
+
+                                                    //      Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    //      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    //      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    //      startActivity(intent);
+                                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                                    i.putExtra("user", u);
+                                                    startActivityForResult(i, REQUEST_SIGNUP);
                                                     finish();
                                                     overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-
-                                              //      Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                              //      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                              //      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                              //      startActivity(intent);
                                                     onLoginSuccess();
+
                                                 }
                                                 else{
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -161,9 +206,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP && resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+            // TODO: Implement successful signup logic here
+            // By default we just finish the Activity and log them in automatically
+            this.finish();
 
         }
     }
@@ -175,7 +220,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-       // _loginButton.setEnabled(true);
+        // _loginButton.setEnabled(true);
         finish();
     }
 

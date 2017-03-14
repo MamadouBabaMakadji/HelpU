@@ -4,7 +4,10 @@ package fr.miage.paris10.projetm1.helpu;
  * Created by JOAN on 02/02/2017.
  */
 
-public class UserInformation {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserInformation implements Parcelable{
 
     private String id;
     public String email;
@@ -18,11 +21,14 @@ public class UserInformation {
     public UserInformation() {
     }
 
-    public UserInformation(String email, String lastName, String firstName, String level) {
+    public UserInformation( String email, String lastName, String firstName, String level, String ufr, String filliere) {
+
         this.email = email;
         this.lastName = lastName;
         this.firstName = firstName;
         this.level = level;
+        this.ufr = ufr;
+        this.filliere = filliere;
     }
 
     public UserInformation(String id, String email, String lastName, String firstName, String level, String ufr, String filliere) {
@@ -93,4 +99,65 @@ public class UserInformation {
     public void setLevel(String level) {
         this.level = level;
     }
+
+    public static final Parcelable.Creator<UserInformation> getCreator() {
+        return CREATOR;
+    }
+
+    public UserInformation(Parcel in) {
+        String[] data = new String[7];
+        in.readStringArray(data);
+        this.id = data[0];
+        this.email = data[1];
+        this.lastName = data[2];
+        this.firstName = data[3];
+        this.level = data[4];
+        this.ufr = data[5];
+        this.filliere = data[6];
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeStringArray(new String[] {
+                this.email,
+                this.lastName,
+                this.firstName,
+                this.level,
+                this.ufr,
+                this.filliere
+        });
+
+    }
+
+    public static final Parcelable.Creator<UserInformation> CREATOR = new Parcelable.Creator<UserInformation>() {
+
+
+        @Override
+        public UserInformation createFromParcel(Parcel in) {
+            return new UserInformation(in);
+        }
+
+        @Override
+        public UserInformation[] newArray(int size) {
+            return new UserInformation[size];
+        }
+
+
+    };
+
+
+
+
+
+
+
+
+
 }

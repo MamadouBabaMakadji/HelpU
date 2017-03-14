@@ -49,6 +49,8 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.input_lastName) EditText _lastNameText;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.spinner_level) Spinner _levelSpinner;
+    @Bind(R.id.spinner_ufr) Spinner _ufrSpinner;
+    @Bind(R.id.spinner_filliere) Spinner _filiereSpinner;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
     @Bind(R.id.btn_signup) Button _signupButton;
@@ -163,9 +165,11 @@ public class SignupActivity extends AppCompatActivity {
                             String firstName = _firstNameText.getText().toString();
                             String email = _emailText.getText().toString();
                             String level = _levelSpinner.getSelectedItem().toString();
+                            String ufr = _ufrSpinner.getSelectedItem().toString();
+                            String filiere = _filiereSpinner.getSelectedItem().toString();
                             String password = _passwordText.getText().toString();
 
-                            register(email, password, lastName, firstName,level);
+                            register(email, password, lastName, firstName,level, ufr, filiere);
 
                             progressDialog.dismiss();
 
@@ -261,14 +265,14 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    public void createUser(String uid, String email, String firstName, String lastName, String level) {
-        UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
+    public void createUser(String uid, String email, String firstName, String lastName, String level, String ufr, String filiere) {
+        UserInformation userInformation = new UserInformation(email, lastName, firstName, level, ufr, filiere);
         mDatabaseReference.child("users").child(uid).setValue(userInformation);
     }
 
 
     public void register(final String email, final String password,
-                         final String firstName, final String lastName, final String level) {
+                         final String firstName, final String lastName, final String level, final String ufr, final String filiere) {
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -276,7 +280,14 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             sendVerificationEmail();
-                            createUser(task.getResult().getUser().getUid(), email, firstName, lastName, level);
+                            createUser(task.getResult().getUser().getUid(), email, firstName, lastName, level, ufr, filiere);
+
+
+                            /*Intent i = new Intent(getApplicationContext(), ActivityRecv.class);
+                            UserInformation u = new UserInformation(email, firstName, lastName, level, ufr, filiere);
+                            i.putExtra("user", u);
+                            startActivity(i);*/
+
 
                             onSignupSuccess();
                         } else {

@@ -52,8 +52,8 @@
     <string name="new_password"> New Password</string>
     <string name="update"> Update</string>
     <string name="send"> Send</string>
-    <string name="sendReset"> Send Password Reset email</string>
-
+    <string name="sendReset"> Send reset password email</string>
+    <string name="printInfo"> My informations</string>
 
     <!--erreur -->
     <string name="login_error_message">Please make sure you enter an email address and password!</string>

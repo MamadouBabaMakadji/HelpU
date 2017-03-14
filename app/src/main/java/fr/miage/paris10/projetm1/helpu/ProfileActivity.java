@@ -1,13 +1,15 @@
 package fr.miage.paris10.projetm1.helpu;
 
-
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,64 +25,234 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileActivity extends AppCompatActivity{
 
-        private Button btnRemoveUser;
+    private Button btnChangePassword, btnSendResetEmail, btnRemoveUser, btnPrintInfo, changePassword, sendEmail, remove, signOut;
+    private EditText oldEmail, password, newPassword;
+   //private TextView print;
+    private ProgressBar progressBar;
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private DatabaseReference mDatabaseReference;
 
-        private FirebaseAuth mFirebaseAuth;
-        private FirebaseUser mFirebaseUser;
-        private DatabaseReference mDatabaseReference;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_profile);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
-            mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
+        btnChangePassword = (Button) findViewById(R.id.change_password_button);
+        btnSendResetEmail = (Button) findViewById(R.id.sending_pass_reset_button);
+        btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
+        btnPrintInfo = (Button) findViewById(R.id.print_info_button);
+        changePassword = (Button) findViewById(R.id.changePass);
+        sendEmail = (Button) findViewById(R.id.send);
+        remove = (Button) findViewById(R.id.remove);
+        signOut = (Button) findViewById(R.id.sign_out);
 
-            btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
+        oldEmail = (EditText) findViewById(R.id.old_email);
+        password = (EditText) findViewById(R.id.password);
+        newPassword = (EditText) findViewById(R.id.newPassword);
+        //print = (TextView) findViewById(R.id.info);
 
-            btnRemoveUser.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        //print.setVisibility(View.GONE);
+        oldEmail.setVisibility(View.GONE);
+        password.setVisibility(View.GONE);
+        newPassword.setVisibility(View.GONE);
+        changePassword.setVisibility(View.GONE);
+        sendEmail.setVisibility(View.GONE);
+        remove.setVisibility(View.GONE);
 
-                  deleteAccount();
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-                }
-            });
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
         }
 
-        public void deleteUserData(String uid) {
-            mDatabaseReference.child("users").child(uid).removeValue();
-        }
 
-        public void deleteAccount() {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        deleteUserData(mFirebaseUser.getUid());
-                        Toast.makeText(ProfileActivity.this, "Your account has been deleted successfully", Toast.LENGTH_SHORT).show();
-                        loadLogInView();
+       /* btnPrintInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldEmail.setVisibility(View.GONE);
+                password.setVisibility(View.GONE);
+                newPassword.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE);
+                sendEmail.setVisibility(View.GONE);
+                remove.setVisibility(View.GONE);
+                print.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        print.setText("User");
+*/
+
+
+        btnPrintInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                UserInformation u = new UserInformation("joan","jo","med", "l2", "maths", "segmi" );
+                i.putExtra("user", u);
+                startActivity(i);
+
+            }
+        });
+
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldEmail.setVisibility(View.GONE);
+                password.setVisibility(View.GONE);
+                newPassword.setVisibility(View.VISIBLE);
+                changePassword.setVisibility(View.VISIBLE);
+                sendEmail.setVisibility(View.GONE);
+                remove.setVisibility(View.GONE);
+            }
+        });
+
+
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (user != null && !newPassword.getText().toString().trim().equals("")) {
+                    if (newPassword.getText().toString().trim().length() < 4 ) {
+                        newPassword.setError("Password too short, enter minimum 4 characters");
+                        progressBar.setVisibility(View.GONE);
                     } else {
-                        Toast.makeText(ProfileActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                        user.updatePassword(newPassword.getText().toString().trim())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(ProfileActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                                            signOut();
+                                            progressBar.setVisibility(View.GONE);
+                                        } else {
+                                            Toast.makeText(ProfileActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
+                                        }
+                                    }
+                                });
                     }
+                } else if (newPassword.getText().toString().trim().equals("")) {
+                    newPassword.setError("Enter password");
+                    progressBar.setVisibility(View.GONE);
                 }
-            });
+            }
+        });
 
-        }
+        btnSendResetEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldEmail.setVisibility(View.VISIBLE);
+                password.setVisibility(View.GONE);
+                newPassword.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE);
+                sendEmail.setVisibility(View.VISIBLE);
+                remove.setVisibility(View.GONE);
+            }
+        });
 
-        private void loadLogInView() {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
+        sendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (!oldEmail.getText().toString().trim().equals("")) {
+                    mFirebaseAuth.sendPasswordResetEmail(oldEmail.getText().toString().trim())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(ProfileActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
+                                    } else {
+                                        Toast.makeText(ProfileActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                } else {
+                    oldEmail.setError("Enter email");
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+        btnRemoveUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+
+                    deleteAccount();
+
+            }
+        });
+
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
+
+
+    }
+
+    public void deleteUserData(String uid) {
+        mDatabaseReference.child("users").child(uid).removeValue();
+    }
+
+    public void deleteAccount() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    deleteUserData(mFirebaseUser.getUid());
+                    Toast.makeText(ProfileActivity.this, "Your account has been deleted successfully", Toast.LENGTH_SHORT).show();
+                    loadLogInView();
+                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                    finish();
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
+    }
+
+    private void loadLogInView() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    //sign out method
+    public void signOut() {
+        mFirebaseAuth.signOut();
+        loadLogInView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+    }
 
 
 

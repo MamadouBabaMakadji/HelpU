@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -64,10 +65,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
+                    if (getIntent().hasExtra("user")) {
+                        UserInformation u = (UserInformation)getIntent().getParcelableExtra("user");
+                        String info = u.getFirstName() + " " + u.getLastName() + " " + u.getUfr();
+                        Toast.makeText(getApplicationContext(), info, Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         };
-        }
+    }
 
 
     @Override
