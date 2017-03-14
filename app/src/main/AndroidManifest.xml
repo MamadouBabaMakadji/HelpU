@@ -39,6 +39,8 @@
             android:theme="@style/AppTheme.Dark" />
         <activity android:name=".ListeMessageActivity"
             android:theme="@style/AppTheme.Dark.ActionBar"/>
+        <activity android:name=".ListHelperActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"/>
         <activity android:name=".ChatRoomActivity"
             android:theme="@style/AppTheme.Dark.ActionBar"/>
     </application>

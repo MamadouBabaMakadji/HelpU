@@ -48,8 +48,7 @@
         android:id="@+id/spinner_SearchHelper_ec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_BecomeHelper_valider"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="169dp" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

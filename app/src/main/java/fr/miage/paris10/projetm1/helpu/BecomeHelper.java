@@ -9,6 +9,9 @@ public class BecomeHelper {
     private String mailHelper;
     private String level;
 
+    public BecomeHelper() {
+    }
+
     public BecomeHelper(String nomMatiere, String mailHelper, String level) {
         this.nomMatiere = nomMatiere;
         this.mailHelper = mailHelper;

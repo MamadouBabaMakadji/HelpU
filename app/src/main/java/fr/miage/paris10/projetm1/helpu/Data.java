@@ -182,6 +182,7 @@ public class Data extends SQLiteOpenHelper {
 
     public ArrayList<String> getEc(String filliere, String level){
 
+
         ArrayList<String> list=new ArrayList<String>();
         // Open the database for reading
         SQLiteDatabase db = this.getReadableDatabase();
@@ -189,6 +190,7 @@ public class Data extends SQLiteOpenHelper {
         db.beginTransaction();
         int semestre = 9;
         if ("L1".equals(level)){
+
             semestre = 2;
         }
         else if ("L2".equals(level)){
@@ -208,15 +210,15 @@ public class Data extends SQLiteOpenHelper {
 
         try
         {
-
-            String selectQuery = "SELECT EC FROM "+ TABLE_PRO +" WHERE FILLIERE = '" + filliere +"' AND  SEMESTRE = '" + semestre + "'" ;
+            String selectQuery = "SELECT DISTINCT EC FROM "+ TABLE_PRO +" WHERE FILLIERE = '" + filliere +"' AND  SEMESTRE = '" + semestre + "'" ;
             Cursor cursor = db.rawQuery(selectQuery, null);
+            Log.d(Data.class.getSimpleName(), String.valueOf(cursor.getCount()));
             if(cursor.getCount() >0)
-
             {
                 while (cursor.moveToNext()) {
                     // Add province name to arraylist
                     String ec= cursor.getString(cursor.getColumnIndex("EC"));
+                    Log.d(Data.class.getSimpleName(), ec);
                     list.add(ec);
 
                 }
