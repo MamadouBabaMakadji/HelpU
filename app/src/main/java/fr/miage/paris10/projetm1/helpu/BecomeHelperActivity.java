@@ -24,27 +24,28 @@ public class BecomeHelperActivity extends AppCompatActivity{
   protected void onCreate(Bundle savedInstanceState) {
 
       //TODO
-     //final UserInformation user = new UserInformation("Yc6vaVgfUnW4C0CxLKE6cdINJCD2","32039713@u-paris10.fr","mamadou","makadji baba","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
-      final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","DROIT ECONOMIE GESTION","Finance");
+     final UserInformation user = new UserInformation("Yc6vaVgfUnW4C0CxLKE6cdINJCD2","32039713@u-paris10.fr","mamadou","makadji baba","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
+      //final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","DROIT ECONOMIE GESTION","Finance");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_become_helper);
       Data data = new Data(this);
     final Spinner spinEC = (Spinner) findViewById(R.id.spinner_BecomeHelper_ec);
-      //le level n'est pas pris en compte
-      ArrayList<String> listEc= data.getEc(user.getFilliere(),user.getLevel());
+      //TODO le level n'est pas pris en compte
+      ArrayList<String> listEc = null;
+    listEc =  data.getEc(user.getFilliere(),user.getLevel());
       ArrayAdapter<String> adapterEc=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listEc);
       spinEC.setAdapter(adapterEc);
 
-      Button  btn_valider = (Button) findViewById(R.id.button_valider);
+      Button  btn_valider = (Button) findViewById(R.id.button_BecomeHelper_valider);
 
     btn_valider.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent intent = new Intent(BecomeHelperActivity.this,ValidationActivity.class);
-        FirebaseAuth  mFirebaseAuth = FirebaseAuth.getInstance();
         DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         BecomeHelper bec = new BecomeHelper(user.getFilliere(),user.getEmail(),user.getLevel());
 
+        //TODO ajout du test de la connexion internet
         //test caracteres interdit pour la base de donnée
         String tmp = spinEC.getSelectedItem().toString();
         if(tmp.contains(".")) {
