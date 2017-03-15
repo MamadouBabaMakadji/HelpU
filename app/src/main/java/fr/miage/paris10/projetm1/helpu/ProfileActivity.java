@@ -98,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity{
         btnPrintInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), PrintInfoActivity.class);
                 UserInformation u = new UserInformation("joan","jo","med", "l2", "maths", "segmi" );
                 i.putExtra("user", u);
                 startActivity(i);

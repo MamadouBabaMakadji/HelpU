@@ -28,15 +28,12 @@
             android:name=".SearchHelperActivity"
             android:theme="@style/AppTheme.Dark.ActionBar" />
         <activity
-            android:name=".ValidationActivity"
+            android:name=".PrintInfoActivity"
             android:theme="@style/AppTheme.Dark.ActionBar" />
         <activity
             android:name=".ValidationDemandeAideActivity"
             android:theme="@style/AppTheme.Dark.ActionBar" />
-        <activity
 
-            android:name=".ResetPasswordActivity"
-            android:theme="@style/AppTheme.Dark" />
         <activity android:name=".ListeMessageActivity"
             android:theme="@style/AppTheme.Dark.ActionBar"/>
         <activity android:name=".ListHelperActivity"

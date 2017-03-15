@@ -282,13 +282,6 @@ public class SignupActivity extends AppCompatActivity {
                             sendVerificationEmail();
                             createUser(task.getResult().getUser().getUid(), email, firstName, lastName, level, ufr, filiere);
 
-
-                            /*Intent i = new Intent(getApplicationContext(), ActivityRecv.class);
-                            UserInformation u = new UserInformation(email, firstName, lastName, level, ufr, filiere);
-                            i.putExtra("user", u);
-                            startActivity(i);*/
-
-
                             onSignupSuccess();
                         } else {
                             onSignupFailed();
