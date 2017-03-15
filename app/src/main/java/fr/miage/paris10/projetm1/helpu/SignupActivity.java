@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,11 +43,14 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
+    private Data data = new Data(this);
 
     @Bind(R.id.input_firstName) EditText _firstNameText;
     @Bind(R.id.input_lastName) EditText _lastNameText;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.spinner_level) Spinner _levelSpinner;
+    @Bind(R.id.spinner_ufr) Spinner _ufrSpinner;
+    @Bind(R.id.spinner_filliere) Spinner _filiereSpinner;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
     @Bind(R.id.btn_signup) Button _signupButton;
@@ -60,10 +67,47 @@ public class SignupActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        final Spinner spin = (Spinner) findViewById(R.id.spinner_level);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.level_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin.setAdapter(adapter);
+        InputStream inputStream = getResources().openRawResource(R.raw.nanterrev2);
+        data.insertData(inputStream);
+        final Spinner spinFilliere = (Spinner) findViewById(R.id.spinner_filliere);
+        final Spinner spinUfr = (Spinner) findViewById(R.id.spinner_ufr);
+        ArrayList<String> listUfr= new ArrayList<String>();
+        listUfr.add("Select UFR");
+         listUfr.add("ARTS LETTRES LANGUES");
+        listUfr.add("DROIT ECONOMIE GESTION");
+        listUfr.add("SCIENCES ET TECHNIQUES DES ACTIVITES PHYSIQUES ET SPORTIVES");
+        listUfr.add("SCIENCES HUMAINES ET SOCIALES");
+        listUfr.add("SCIENCES TECHNOLOGIES ET SANTE");
+        ArrayAdapter<String> adapterUfr=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, listUfr);
+        spinUfr.setAdapter(adapterUfr);
+        spinUfr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(!parent.getItemAtPosition(position).toString().isEmpty())
+                {
+                    ArrayList<String> listFilliere=data.getAllFilliere(parent.getItemAtPosition(position).toString());
+                    listFilliere.add(0,"Select Filliere");
+                    ArrayAdapter<String> adapterFilliere=new ArrayAdapter<String>(SignupActivity.this, R.layout.spinner_layout, R.id.text, listFilliere);
+                    spinFilliere.setAdapter(adapterFilliere);
+                    adapterFilliere.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        final Spinner spinLevel = (Spinner) findViewById(R.id.spinner_level);
+        ArrayAdapter<CharSequence> adapterLevel = ArrayAdapter.createFromResource(this, R.array.level_array, android.R.layout.simple_spinner_item);
+        adapterLevel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinLevel.setAdapter(adapterLevel);
+
 
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
@@ -121,9 +165,11 @@ public class SignupActivity extends AppCompatActivity {
                             String firstName = _firstNameText.getText().toString();
                             String email = _emailText.getText().toString();
                             String level = _levelSpinner.getSelectedItem().toString();
+                            String ufr = _ufrSpinner.getSelectedItem().toString();
+                            String filiere = _filiereSpinner.getSelectedItem().toString();
                             String password = _passwordText.getText().toString();
 
-                            register(email, password, lastName, firstName,level);
+                            register(email, password, lastName, firstName,level, ufr, filiere);
 
                             progressDialog.dismiss();
 
@@ -215,21 +261,18 @@ public class SignupActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) { // connected to the internet
-            return true;
-        }
-        return false;
+        return (activeNetwork != null && activeNetwork.isConnected());
 
     }
 
-    public void createUser(String uid, String email, String firstName, String lastName, String level) {
-        UserInformation userInformation = new UserInformation(email, lastName, firstName, level);
+    public void createUser(String uid, String email, String firstName, String lastName, String level, String ufr, String filiere) {
+        UserInformation userInformation = new UserInformation(email, lastName, firstName, level, ufr, filiere);
         mDatabaseReference.child("users").child(uid).setValue(userInformation);
     }
 
 
     public void register(final String email, final String password,
-                         final String firstName, final String lastName, final String level) {
+                         final String firstName, final String lastName, final String level, final String ufr, final String filiere) {
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -237,7 +280,7 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             sendVerificationEmail();
-                            createUser(task.getResult().getUser().getUid(), email, firstName, lastName, level);
+                            createUser(task.getResult().getUser().getUid(), email, firstName, lastName, level, ufr, filiere);
 
                             onSignupSuccess();
                         } else {

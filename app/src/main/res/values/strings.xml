@@ -35,9 +35,14 @@
     <string name="SearchHelper"> Search Helper</string>
     <string name="BecomeHelper"> Become Helper</string>
     <string name="beHelper"> In which course would you like to help someone ?</string>
-    <string name="Want">I want help someone </string>
+    <string name="Want">I want to help someone </string>
     <string name="thanks">Thanks for your help.We will contact you when someone needs you. </string>
     <string name="action_logout">Logout</string>
+
+    <!-- partie Search Helper -->
+    <string name="SearchHelp"> In which course would you like help ?</string>
+    <string name="Research">Research</string>
+    <string name="requestAccepted">Your request has been accepted. We will contact you as soon as possible. </string>
 
     <!--partie profile -->
     <string name="updatePassword"> Update password</string>
@@ -47,8 +52,8 @@
     <string name="new_password"> New Password</string>
     <string name="update"> Update</string>
     <string name="send"> Send</string>
-    <string name="sendReset"> Send Password Reset email</string>
-
+    <string name="sendReset"> Send reset password email</string>
+    <string name="printInfo"> My informations</string>
 
     <!--erreur -->
     <string name="login_error_message">Please make sure you enter an email address and password!</string>

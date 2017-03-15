@@ -62,12 +62,47 @@
         </android.support.design.widget.TextInputLayout>
 
 
+        <!-- UFR label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="UFR :">
+
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_ufr" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!-- Filliere label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Filliere:">
+
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_filliere" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
         <!-- Level label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:textColor="@android:color/primary_text_dark"
             android:text="Level:">
 
 
@@ -77,6 +112,8 @@
                 android:id="@+id/spinner_level" />
 
     </android.support.design.widget.TextInputLayout>
+
+
 
 
         <!-- Password Label -->
@@ -123,6 +160,14 @@
             android:gravity="center"
             android:textSize="16dip"
             android:textColor="@color/iron" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Button" />
 
     </LinearLayout>
 </ScrollView>

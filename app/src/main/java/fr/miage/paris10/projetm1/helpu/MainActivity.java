@@ -17,6 +17,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static fr.miage.paris10.projetm1.helpu.R.drawable.user;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,14 +26,17 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private Button btn_help;
+    private Button btn_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final UserInformation user = getIntent().getExtras().getParcelable("user");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -50,13 +54,26 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(MainActivity.this, BecomeHelperActivity.class);
+                            i.putExtra("user", user);
                             startActivity(i);
                         }
                     });
+                    btn_search = (Button) findViewById(R.id.button_search);
+                    btn_search.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(MainActivity.this, SearchHelperActivity.class);
+                            i.putExtra("user", user);
+                            startActivity(i);
+                        }
+                    });
+
+
+
                 }
             }
         };
-        }
+    }
 
 
     @Override
@@ -86,14 +103,13 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        final UserInformation userInfo = getIntent().getExtras().getParcelable("user");
         //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_profile) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if (id == R.id.action_profile) {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            intent.putExtra("userInfo",userInfo);
             startActivity(intent);
-        }*/
+        }
 
         if (id == R.id.action_logout) {
             mFirebaseAuth.signOut();
@@ -104,9 +120,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void loadLogInView() {
         Intent intent = new Intent(this, LoginActivity.class);

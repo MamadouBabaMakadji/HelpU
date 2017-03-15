@@ -16,31 +16,33 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListeMessageActivity extends AppCompatActivity {
+public class ListHelperActivity extends AppCompatActivity {
 
     private ListView listView;
     private ArrayList db_userName = new ArrayList<String>() ;
-    private ListMessageAdapter adapter;
+    private ListHelperAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final List<String> listId = getIntent().getStringArrayListExtra("listKey");
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_liste_message);
-        setTitle("Messagerie");
-        listView = (ListView) findViewById(R.id.list_msg);
-        adapter = new ListMessageAdapter(ListeMessageActivity.this,db_userName);
+        setContentView(R.layout.activity_list_helper);
+        setTitle("Helper");
+        listView = (ListView) findViewById(R.id.list_helpeur);
+        adapter = new ListHelperAdapter(ListHelperActivity.this,db_userName);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListeMessageActivity.this, ChatRoomActivity.class);
+                Intent intent = new Intent(ListHelperActivity.this, ChatRoomActivity.class);
                 String item = listView.getItemAtPosition(position).toString();
-                intent.putExtra("user",item);
+                intent.putExtra("user", item);
                 startActivity(intent);
             }
         });
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
         databaseReference = databaseReference.child("/users");
@@ -49,7 +51,7 @@ public class ListeMessageActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String currentlyUser = user.getUid();
-                if(!dataSnapshot.getKey().equals(currentlyUser)){
+                if(listId.contains(dataSnapshot.getKey()) && !dataSnapshot.getKey().equals(currentlyUser) ){
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                     db_userName.add(userInformation.getCompletName());
                     adapter.notifyDataSetChanged();

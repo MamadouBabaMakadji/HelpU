@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,33 +21,63 @@ import java.util.List;
 public class ChatRoomActivity extends AppCompatActivity {
 
     private String to_userName;
-    ListView listView;
-    ArrayAdapter<String> adapter;
-    List messages = new ArrayList<String>();
-    Button btn_send;
-    EditText editText;
-    DatabaseReference d;
-    FirebaseDatabase database;
+    private String destinataireID;
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+    private List messages = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
         Intent intent = getIntent();
+        Button btn_send;
         listView = (ListView) findViewById(R.id.listViewConversations);
         to_userName = intent.getStringExtra("user");
         setTitle(to_userName);
         adapter = new ArrayAdapter<String>(ChatRoomActivity.this,android.R.layout.simple_list_item_1, messages);
         listView.setAdapter(adapter);
-        btn_send = (Button) findViewById(R.id.button_send);
+        btn_send = (Button) findViewById(R.id.btn_send);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
+        databaseReference = databaseReference.child("/users");
+        databaseReference.addChildEventListener(new ChildEventListener() {
+                                                    @Override
+                                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                                        UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                                                        if(userInformation.getCompletName().equals(to_userName)) {
+                                                            destinataireID = dataSnapshot.getKey();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText = (EditText) findViewById(R.id.champText_msg);
+                EditText editText = (EditText) findViewById(R.id.champText_msg);
                 String msg = editText.getText().toString();
-                String author = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                Message message = new Message(author,msg);
+                String from = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                Message message = new Message(from,destinataireID,msg);
                 FirebaseDatabase.getInstance()
-                        .getReference().child("message")
+                        .getReference().child("messages")
                         .push()
                         .setValue(message);
                 editText.setText("");
@@ -54,15 +85,22 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         });
         database = FirebaseDatabase.getInstance();
-        d = database.getReference();
-        d = d.child("/message");
-        d.addChildEventListener(new ChildEventListener() {
+        databaseReference = database.getReference();
+        databaseReference = databaseReference.child("/messages");
+        databaseReference.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String currentlyUser = user.getUid();
                 Message message = dataSnapshot.getValue(Message.class);
-                messages.add(message.getMessage());
-                adapter.notifyDataSetChanged();
+                //messages.add("Destinataire :"+destinataireID);
+                //destinataireID = "WvVnW8sZt0UxBpRPUV4FABrYCFM2";
+                if( (message.getFrom().equals(currentlyUser) && message.getDestinataire().equals(destinataireID)) ||
+                        (message.getFrom().equals(destinataireID) && message.getDestinataire().equals(currentlyUser))  ){
+                    messages.add(message.getMessage());
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override

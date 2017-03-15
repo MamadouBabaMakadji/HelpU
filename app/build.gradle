@@ -6,7 +6,7 @@ apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "fr.miage.paris10.projetm1.helpu"
         minSdkVersion 19
