@@ -14,13 +14,12 @@
       android:textSize="20dp"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_alignParentStart="true"
-      android:layout_marginStart="62dp"
-      android:layout_marginTop="41dp"
+      android:layout_marginTop="22dp"
       android:id="@+id/textView"
       android:text="@string/beHelper"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      android:layout_below="@+id/textInputLayout"
+      android:layout_alignParentStart="true" />
 
 
   <!-- EC label -->
@@ -29,7 +28,8 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="10dp"
       android:layout_marginBottom="10dp"
-      android:text="EC:">
+      android:text="EC:"
+      android:id="@+id/textInputLayout">
 
 
   </android.support.design.widget.TextInputLayout>
