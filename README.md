@@ -22,6 +22,12 @@ Elle permet aux étudiants d'aider ou bien de se faire aider en leur donnant la 
 ## Built With
 * [Gradle](https://gradle.org/)
 
+## Last Changes 1.0.0-alpha.1
+* Application Fonctionnel 
+* Ajout d'une partie profil
+* Ajout de la partie Recherche d'un Helper
+* Insertion de la base de donnée des matières de Nanterre Université
+
 ## Last Changes 0.2.0 
 * ajout de la première version de la messagerie 
 * ajout de test unitaire graphique 
