@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,11 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final UserInformation user = getIntent().getExtras().getParcelable("user");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(MainActivity.this, BecomeHelperActivity.class);
+                            i.putExtra("user", user);
                             startActivity(i);
                         }
                     });
@@ -59,14 +63,17 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(MainActivity.this, SearchHelperActivity.class);
+                            i.putExtra("user", user);
                             startActivity(i);
                         }
                     });
 
+
+
                 }
             }
         };
-        }
+    }
 
 
     @Override
@@ -98,12 +105,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_profile) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if (id == R.id.action_profile) {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
-        }*/
+        }
 
         if (id == R.id.action_logout) {
             mFirebaseAuth.signOut();
@@ -114,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void loadLogInView() {
         Intent intent = new Intent(this, LoginActivity.class);

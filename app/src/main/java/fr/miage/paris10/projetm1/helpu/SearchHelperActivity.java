@@ -33,9 +33,10 @@ public class SearchHelperActivity extends AppCompatActivity {
 
 
         //TODO
-       final UserInformation user = new UserInformation("Yc6vaVgfUnW4C0CxLKE6cdINJCD2","32039713@u-paris10.fr","mamadou","makadji baba","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
+        final UserInformation user = getIntent().getExtras().getParcelable("user");
+        // final UserInformation user = new UserInformation("Yc6vaVgfUnW4C0CxLKE6cdINJCD2","32039713@u-paris10.fr","mamadou","makadji baba","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
         //final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","DROIT ECONOMIE GESTION","Finance");
-       // final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","SCIENCES HUMAINES ET SOCIALES","Psychologie");
+        // final UserInformation user = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","SCIENCES HUMAINES ET SOCIALES","Psychologie");
 
 
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class SearchHelperActivity extends AppCompatActivity {
         Button btn_valider = (Button) findViewById(R.id.button_SearchHelper_valider);
 
         btn_valider.setOnClickListener(new View.OnClickListener() {
-            final List<String> listKeys = new ArrayList<String>();
+
             @Override
             public void onClick(View v) {
 
@@ -75,6 +76,7 @@ public class SearchHelperActivity extends AppCompatActivity {
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                final List<String> listKeys = new ArrayList<String>();
                                 BecomeHelper b = dataSnapshot.getValue(BecomeHelper.class);
                                 for (DataSnapshot data : dataSnapshot.getChildren() ) {
                                     listKeys.add(data.getKey());
@@ -86,6 +88,7 @@ public class SearchHelperActivity extends AppCompatActivity {
                                 }
                                 else{
                                     Intent intent = new Intent(SearchHelperActivity.this,ListHelperActivity.class);
+                                    intent.putExtra("listKey", (ArrayList<String>) listKeys);
                                     startActivity(intent);
                                 }
                             }
