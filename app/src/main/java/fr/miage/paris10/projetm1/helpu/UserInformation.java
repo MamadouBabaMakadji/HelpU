@@ -41,6 +41,17 @@ public class UserInformation implements Parcelable{
         this.filliere = filliere;
     }
 
+    public UserInformation(Parcel in) {
+        this.id = in.readString();
+        this.email = in.readString();
+        this.lastName = in.readString();
+        this.firstName = in.readString();
+        this.level = in.readString();
+        this.ufr = in.readString();
+        this.filliere = in.readString();
+
+    }
+
     public String getId() {
         return id;
     }
@@ -104,17 +115,7 @@ public class UserInformation implements Parcelable{
         return CREATOR;
     }
 
-    public UserInformation(Parcel in) {
-        String[] data = new String[7];
-        in.readStringArray(data);
-        this.id = data[0];
-        this.email = data[1];
-        this.lastName = data[2];
-        this.firstName = data[3];
-        this.level = data[4];
-        this.ufr = data[5];
-        this.filliere = data[6];
-    }
+
 
 
     @Override
@@ -125,14 +126,14 @@ public class UserInformation implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeStringArray(new String[] {
-                this.email,
-                this.lastName,
-                this.firstName,
-                this.level,
-                this.ufr,
-                this.filliere
-        });
+        dest.writeString(this.id);
+        dest.writeString(this.email);
+        dest.writeString(this.lastName);
+        dest.writeString(this.firstName);
+        dest.writeString(this.level);
+        dest.writeString(this.ufr);
+        dest.writeString(this.filliere);
+
 
     }
 

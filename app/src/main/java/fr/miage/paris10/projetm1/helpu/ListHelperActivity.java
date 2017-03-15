@@ -26,9 +26,7 @@ public class ListHelperActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final List<String> listId = new ArrayList<String>();
-        listId.add("WvVnW8sZt0UxBpRPUV4FABrYCFM2");
-        listId.add("Yc6vaVgfUnW4C0CxLKE6cdINJCD2");
+        final List<String> listId = getIntent().getStringArrayListExtra("listKey");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_helper);
         setTitle("Helper");

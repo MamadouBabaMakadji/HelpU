@@ -43,7 +43,7 @@ import butterknife.Bind;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private UserInformation u = new UserInformation();
+
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -126,14 +126,13 @@ public class LoginActivity extends AppCompatActivity {
 
                             String email = _emailText.getText().toString();
                             String password = _passwordText.getText().toString();
-                           // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                         //   final String currentlyUser = user.getUid();
+                            // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            //   final String currentlyUser = user.getUid();
                             mFirebaseAuth.signInWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
-
                                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                                 if( user.isEmailVerified()){
                                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -143,16 +142,29 @@ public class LoginActivity extends AppCompatActivity {
 
                                                         @Override
                                                         public void onDataChange(DataSnapshot dataSnapshot) {
-
+                                                            UserInformation u = null;
+                                                            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                            Log.d(LoginActivity.class.getSimpleName(),id);
                                                             for (DataSnapshot data : dataSnapshot.getChildren() ) {
-                                                                if(data.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                                                  u =  data.getValue(UserInformation.class);
+
+                                                                if(data.getKey().equals(id)){
+                                                                    u =  data.getValue(UserInformation.class);
                                                                     u.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                                                 }
-
                                                             }
 
-                                                       //     }
+                                                            //     }
+
+                                                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                                            // UserInformation a = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
+                                                            // UserInformation a = u ;
+                                                            i.putExtra("user", u);
+                                                            startActivityForResult(i, REQUEST_SIGNUP);
+                                                            finish();
+                                                            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                                                            onLoginSuccess();
+
+
                                                         }
 
                                                         @Override
@@ -172,12 +184,6 @@ public class LoginActivity extends AppCompatActivity {
                                                     //      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     //      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                     //      startActivity(intent);
-                                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                                    i.putExtra("user", u);
-                                                    startActivityForResult(i, REQUEST_SIGNUP);
-                                                    finish();
-                                                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                                                    onLoginSuccess();
 
                                                 }
                                                 else{

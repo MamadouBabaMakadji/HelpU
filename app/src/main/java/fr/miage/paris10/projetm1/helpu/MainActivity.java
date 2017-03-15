@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final UserInformation user = getIntent().getExtras().getParcelable("user");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(MainActivity.this, BecomeHelperActivity.class);
+                            i.putExtra("user", user);
                             startActivity(i);
                         }
                     });
@@ -61,15 +63,12 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(MainActivity.this, SearchHelperActivity.class);
+                            i.putExtra("user", user);
                             startActivity(i);
                         }
                     });
 
-                    if (getIntent().hasExtra("user")) {
-                        UserInformation u = (UserInformation)getIntent().getParcelableExtra("user");
-                        String info = u.getFirstName() + " " + u.getLastName() + " " + u.getUfr();
-                        Toast.makeText(getApplicationContext(), info, Toast.LENGTH_LONG).show();
-                    }
+
 
                 }
             }
