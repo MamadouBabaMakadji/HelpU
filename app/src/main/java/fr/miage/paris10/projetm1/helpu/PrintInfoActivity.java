@@ -21,6 +21,6 @@ public class PrintInfoActivity extends AppCompatActivity{
                 user.getFirstName() + "\n" + " LastName : " + user.getLastName() +
                 "\n" + " Email : " + user.getEmail() + "\n" + " UFR : " +
                 user.getUfr() + "\n" + " Filiere : " + user.getFilliere() +
-                "\n" + " Level : " + user.getFilliere());
+                "\n" + " Level : " + user.getLevel());
     }
 }

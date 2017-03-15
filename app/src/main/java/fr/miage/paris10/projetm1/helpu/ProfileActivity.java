@@ -99,8 +99,8 @@ public class ProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), PrintInfoActivity.class);
-                UserInformation u = new UserInformation("joan","jo","med", "l2", "maths", "segmi" );
-                i.putExtra("user", u);
+                final UserInformation userInfo = getIntent().getExtras().getParcelable("userInfo");
+                i.putExtra("user", userInfo);
                 startActivity(i);
 
             }

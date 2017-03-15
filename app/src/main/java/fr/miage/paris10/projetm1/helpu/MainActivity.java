@@ -13,11 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static fr.miage.paris10.projetm1.helpu.R.drawable.user;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -103,10 +103,11 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        final UserInformation userInfo = getIntent().getExtras().getParcelable("user");
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile) {
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            intent.putExtra("userInfo",userInfo);
             startActivity(intent);
         }
 
