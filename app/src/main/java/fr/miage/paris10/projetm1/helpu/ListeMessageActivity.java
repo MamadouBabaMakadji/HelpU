@@ -3,6 +3,7 @@ package fr.miage.paris10.projetm1.helpu;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,11 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ListeMessageActivity extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList db_userName = new ArrayList<String>() ;
+   private ArrayList db_userName = new ArrayList<String>() ;
+    private ArrayList<String> db_message = new ArrayList<String>();
     private ListMessageAdapter adapter;
 
     @Override
@@ -42,18 +46,25 @@ public class ListeMessageActivity extends AppCompatActivity {
             }
         });
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference();
-        databaseReference = databaseReference.child("/users");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        final DatabaseReference databaseReference = database.getReference();
+        databaseReference.child("/messages").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String currentlyUser = user.getUid();
-                if(!dataSnapshot.getKey().equals(currentlyUser)){
-                    UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                    db_userName.add(userInformation.getCompletName());
+              final  String currentlyUser = user.getUid();
+                    Message m = dataSnapshot.getValue(Message.class);
+                if(m.getFrom().equals(currentlyUser)){
+                    db_message.add(m.getDestinataire());
                     adapter.notifyDataSetChanged();
                 }
+                if(m.getDestinataire().equals(currentlyUser)  ){
+                    db_message.add(m.getFrom());
+                    adapter.notifyDataSetChanged();
+                }
+
+
+
+
             }
 
             @Override
@@ -76,5 +87,50 @@ public class ListeMessageActivity extends AppCompatActivity {
 
             }
         });
+
+        FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference2 = database2.getReference();
+        databaseReference2.child("/users");
+        databaseReference2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                UserInformation u2 = dataSnapshot.getValue(UserInformation.class);
+
+                Set set = new HashSet() ;
+                set.addAll(db_message) ;
+                ArrayList distinctList = new ArrayList(set) ;
+
+                db_userName.add(u2.getCompletName());
+                adapter.notifyDataSetChanged();
+
+
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
     }
 }
