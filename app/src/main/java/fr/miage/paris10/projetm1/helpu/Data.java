@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by david on 09/03/2017.
@@ -180,7 +181,7 @@ public class Data extends SQLiteOpenHelper {
 
     public ArrayList<String> getEc(String filliere, String level){
 
-
+        Calendar cal = Calendar.getInstance();
         ArrayList<String> list=new ArrayList<String>();
         // Open the database for reading
         SQLiteDatabase db = this.getReadableDatabase();
@@ -188,20 +189,51 @@ public class Data extends SQLiteOpenHelper {
         db.beginTransaction();
         int semestre = 9;
         if ("L1".equals(level)){
+            if(cal.get(Calendar.MONTH) >= 9 && cal.get(Calendar.MONTH) >= 9)
+            {
+                semestre = 1;
+            }
+            else{
+                semestre = 2;
+            }
 
-            semestre = 2;
+
         }
         else if ("L2".equals(level)){
-            semestre = 4;
+            if(cal.get(Calendar.MONTH) >= 9 && cal.get(Calendar.MONTH) >= 9)
+            {
+                semestre = 3;
+            }
+            else{
+                semestre = 4;
+            }
         }
         else if ("L3".equals(level)){
-            semestre = 6;
+            if(cal.get(Calendar.MONTH) >= 9 && cal.get(Calendar.MONTH) >= 9)
+            {
+                semestre = 5;
+            }
+            else{
+                semestre = 6;
+            }
         }
         else if ("M1".equals(level)){
-            semestre = 8;
+            if(cal.get(Calendar.MONTH) >= 9 && cal.get(Calendar.MONTH) >= 9)
+            {
+                semestre = 7;
+            }
+            else{
+                semestre = 8;
+            }
         }
         else if ("M2".equals(level)){
-            semestre = 0;
+            if(cal.get(Calendar.MONTH) >= 9 && cal.get(Calendar.MONTH) >= 9)
+            {
+                semestre = 9;
+            }
+            else{
+                semestre = 0;
+            }
         }
 
 

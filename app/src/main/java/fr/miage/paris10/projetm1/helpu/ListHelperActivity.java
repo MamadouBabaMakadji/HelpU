@@ -21,6 +21,7 @@ import java.util.List;
 public class ListHelperActivity extends AppCompatActivity {
 
     private ListView listView;
+    private ArrayList db_id_userName = new ArrayList<String>() ;
     private ArrayList db_userName = new ArrayList<String>() ;
     private ListHelperAdapter adapter;
 
@@ -38,7 +39,9 @@ public class ListHelperActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListHelperActivity.this, ChatRoomActivity.class);
                 String item = listView.getItemAtPosition(position).toString();
+                String id_user = db_id_userName.get(position).toString();
                 intent.putExtra("user", item);
+                intent.putExtra("id", id_user);
                 startActivity(intent);
             }
         });
@@ -53,7 +56,8 @@ public class ListHelperActivity extends AppCompatActivity {
                 String currentlyUser = user.getUid();
                 if(listId.contains(dataSnapshot.getKey()) && !dataSnapshot.getKey().equals(currentlyUser) ){
                     UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                    db_userName.add(userInformation.getCompletName());
+                    db_userName.add((userInformation.getLastName() + " " + userInformation.getFirstName()));
+                    db_id_userName.add(dataSnapshot.getKey());
                     adapter.notifyDataSetChanged();
                 }
             }

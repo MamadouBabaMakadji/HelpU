@@ -33,42 +33,14 @@ public class ChatRoomActivity extends AppCompatActivity {
         Button btn_send;
         listView = (ListView) findViewById(R.id.listViewConversations);
         to_userName = intent.getStringExtra("user");
+        destinataireID = intent.getStringExtra("id");
         setTitle(to_userName);
         adapter = new ArrayAdapter<String>(ChatRoomActivity.this,android.R.layout.simple_list_item_1, messages);
         listView.setAdapter(adapter);
         btn_send = (Button) findViewById(R.id.btn_send);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
-        databaseReference = databaseReference.child("/users");
-        databaseReference.addChildEventListener(new ChildEventListener() {
-                                                    @Override
-                                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                                        UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
-                                                        if(userInformation.getCompletName().equals(to_userName)) {
-                                                            destinataireID = dataSnapshot.getKey();
-                                                        }
-                                                    }
 
-                                                    @Override
-                                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                    }
-                                                });
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

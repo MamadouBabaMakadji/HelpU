@@ -161,7 +161,6 @@
             android:textSize="16dip"
             android:textColor="@color/iron" />
 
-    
 
     </LinearLayout>
 </ScrollView>

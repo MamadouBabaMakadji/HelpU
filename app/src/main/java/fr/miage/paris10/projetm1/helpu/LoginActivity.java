@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mFirebaseAuth;
-   DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReference;
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
@@ -158,9 +158,10 @@ public class LoginActivity extends AppCompatActivity {
                                                             // UserInformation a = new UserInformation("WvVnW8sZt0UxBpRPUV4FABrYCFM2","33012900@u-paris10.fr","david","meimoun","M1","SCIENCES TECHNOLOGIES ET SANTE","Methodes informatiques appliquees a la gestion des entreprises (MIAGE)");
                                                             // UserInformation a = u ;
                                                             i.putExtra("user", u);
-                                                            startActivityForResult(i, REQUEST_SIGNUP);
+                                                            startActivity(i);
+                                                            //startActivityForResult(i, REQUEST_SIGNUP);
                                                             finish();
-                                                            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                                                            //   overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                                                             onLoginSuccess();
 
 
