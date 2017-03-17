@@ -95,9 +95,6 @@ public class UserInformation implements Parcelable{
     public String getFirstName() {
         return firstName;
     }
-    public String getCompletName() {
-        return lastName+" "+firstName;
-    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

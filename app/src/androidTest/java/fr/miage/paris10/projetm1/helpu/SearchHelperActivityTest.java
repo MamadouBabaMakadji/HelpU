@@ -19,7 +19,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class SearchHelperActivityTest {
 
-    @Rule
+   @Rule
     public ActivityTestRule<SearchHelperActivity> SearchhelperActivityRule  = new ActivityTestRule<>(SearchHelperActivity.class);
 
 
