@@ -17,7 +17,6 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import static fr.miage.paris10.projetm1.helpu.R.drawable.user;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -23,8 +23,8 @@ import java.util.List;
  */
 
 public class SearchHelperActivity extends AppCompatActivity {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference refData =  database.getReference();
+   private  FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference refData =  database.getReference();
     List<String> listEc = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
