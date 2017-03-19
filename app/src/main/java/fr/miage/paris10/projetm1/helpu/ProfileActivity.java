@@ -14,6 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -186,13 +189,15 @@ public class ProfileActivity extends AppCompatActivity{
         });
 
 
-        btnRemoveUser.setOnClickListener(new View.OnClickListener() {
+        btnRemoveUser.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
 
-                    deleteAccount();
-
+                deleteAccount(); // supprime le compte de l'utlisateur
+                deleteAllMsg(); // supprime tous les messages de l'utilisateur
+                deleteAllHelp(); // supprime toutes les matières dans lesquelles l'utilisateur est prêt à aider
             }
         });
 
@@ -205,6 +210,44 @@ public class ProfileActivity extends AppCompatActivity{
         });
 
 
+    }
+
+    private void deleteAllHelp() {
+        // TODO
+    }
+
+    private void deleteAllMsg() {
+        mDatabaseReference.child(Constants.MESSAGES_DB).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Message message = dataSnapshot.getValue(Message.class);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String currentlyUser = user.getUid();
+                if(message.getUserId().equals(currentlyUser) || message.getDestinataireID().equals(currentlyUser)){
+                    mDatabaseReference.child(Constants.MESSAGES_DB).child(dataSnapshot.getKey()).removeValue();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void deleteUserData(String uid) {
