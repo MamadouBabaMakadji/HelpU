@@ -5,6 +5,9 @@
     <string name="action_profile">My profile</string>
     <string name="messages">Messages</string>
     <string name="send_message">Send</string>
+    <string name="tchat_hint">Message</string>
+    <string name="tchat_content_img">Envoyer une image</string>
+    <string name="tchat_content_send">Envoyer le message</string>
 
     <!-- partie signup -->
     <string name="signup_address">Address</string>
