@@ -25,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     Button btnChangePassword, btnSendResetEmail, btnRemoveUser, btnPrintInfo, changePassword, sendEmail, remove, signOut;
     private EditText oldEmail, password, newPassword;
-   //private TextView print;
+    //private TextView print;
     private ProgressBar progressBar;
 
     private FirebaseAuth mFirebaseAuth;
@@ -52,7 +52,6 @@ public class ProfileActivity extends AppCompatActivity{
         changePassword = (Button) findViewById(R.id.changePass);
         sendEmail = (Button) findViewById(R.id.send);
         remove = (Button) findViewById(R.id.remove);
-        signOut = (Button) findViewById(R.id.sign_out);
 
         oldEmail = (EditText) findViewById(R.id.old_email);
         password = (EditText) findViewById(R.id.password);
@@ -191,18 +190,12 @@ public class ProfileActivity extends AppCompatActivity{
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
 
-                    deleteAccount();
+                deleteAccount();
 
             }
         });
 
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
 
 
     }
