@@ -37,7 +37,7 @@ public class ListHelperActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListHelperActivity.this, ChatRoomActivity.class);
+                Intent intent = new Intent(ListHelperActivity.this, TchatActivity.class);
                 String item = listView.getItemAtPosition(position).toString();
                 String id_user = db_id_userName.get(position).toString();
                 intent.putExtra("user", item);

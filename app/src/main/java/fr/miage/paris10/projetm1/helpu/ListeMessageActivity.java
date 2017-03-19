@@ -41,7 +41,8 @@ public class ListeMessageActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(ListeMessageActivity.this, ChatRoomActivity.class);
+                    // Changement de l'intent vers la nouvelle messagerie "TchatActivity"
+                    Intent intent = new Intent(ListeMessageActivity.this, TchatActivity.class);
                     String item = listView.getItemAtPosition(position).toString();
                     String id_user = db_id_userName.get(position).toString();
                     intent.putExtra("user", item);
@@ -58,12 +59,12 @@ public class ListeMessageActivity extends AppCompatActivity {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     final String currentlyUser = user.getUid();
                     Message m = dataSnapshot.getValue(Message.class);
-                    if (m.getFrom().equals(currentlyUser)) {
-                        db_message.add(m.getDestinataire());
+                    if (m.getUserId().equals(currentlyUser)) {
+                        db_message.add(m.getDestinataireID());
                         adapter.notifyDataSetChanged();
                     }
-                    if (m.getDestinataire().equals(currentlyUser)) {
-                        db_message.add(m.getFrom());
+                    if (m.getDestinataireID().equals(currentlyUser)) {
+                        db_message.add(m.getUserId());
                         adapter.notifyDataSetChanged();
                     }
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
