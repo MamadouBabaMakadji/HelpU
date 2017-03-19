@@ -17,6 +17,7 @@ public class Message {
     private String content;
     private String imageUrl;
     private Long date;
+    private String destinataireID;
 
     public String getDestinataireID() {
         return destinataireID;
@@ -25,8 +26,6 @@ public class Message {
     public void setDestinataireID(String destinataireID) {
         this.destinataireID = destinataireID;
     }
-
-    private String destinataireID;
 
     public Message(){}
 
