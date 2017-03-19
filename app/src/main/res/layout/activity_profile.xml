@@ -18,7 +18,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-       <!-- <TextView
+        <!-- <TextView
             android:id="@+id/print"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,16 +138,6 @@
 
 
 
-        <Button
-            android:id="@+id/sign_out"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/primary"
-            android:text="@string/action_logout"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
 
     </LinearLayout>
 

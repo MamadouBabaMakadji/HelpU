@@ -14,9 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     Button btnChangePassword, btnSendResetEmail, btnRemoveUser, btnPrintInfo, changePassword, sendEmail, remove, signOut;
     private EditText oldEmail, password, newPassword;
-   //private TextView print;
+    //private TextView print;
     private ProgressBar progressBar;
 
     private FirebaseAuth mFirebaseAuth;
@@ -55,7 +52,6 @@ public class ProfileActivity extends AppCompatActivity{
         changePassword = (Button) findViewById(R.id.changePass);
         sendEmail = (Button) findViewById(R.id.send);
         remove = (Button) findViewById(R.id.remove);
-        signOut = (Button) findViewById(R.id.sign_out);
 
         oldEmail = (EditText) findViewById(R.id.old_email);
         password = (EditText) findViewById(R.id.password);
@@ -189,65 +185,19 @@ public class ProfileActivity extends AppCompatActivity{
         });
 
 
-        btnRemoveUser.setOnClickListener(
-                new View.OnClickListener() {
+        btnRemoveUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
 
-                deleteAccount(); // supprime le compte de l'utlisateur
-                deleteAllMsg(); // supprime tous les messages de l'utilisateur
-                deleteAllHelp(); // supprime toutes les matières dans lesquelles l'utilisateur est prêt à aider
-            }
-        });
-
-
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
-
-
-    }
-
-    private void deleteAllHelp() {
-        // TODO
-    }
-
-    private void deleteAllMsg() {
-        mDatabaseReference.child(Constants.MESSAGES_DB).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Message message = dataSnapshot.getValue(Message.class);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String currentlyUser = user.getUid();
-                if(message.getUserId().equals(currentlyUser) || message.getDestinataireID().equals(currentlyUser)){
-                    mDatabaseReference.child(Constants.MESSAGES_DB).child(dataSnapshot.getKey()).removeValue();
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                deleteAccount();
 
             }
         });
+
+
+
+
     }
 
     public void deleteUserData(String uid) {

@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -20,6 +23,7 @@ import java.util.List;
 
 public class BecomeHelperActivity extends AppCompatActivity{
   List<String> listEc = new ArrayList<String>();
+  private boolean register;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,13 +53,14 @@ public class BecomeHelperActivity extends AppCompatActivity{
       btn_valider.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+          register = false;
           if(listEc.isEmpty()){
             Toast.makeText(getBaseContext(), "Error Database", Toast.LENGTH_LONG).show();
           }
           else{
-            Intent intent = new Intent(BecomeHelperActivity.this,ValidationActivity.class);
-            DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-            BecomeHelper bec = new BecomeHelper(user.getFilliere(),user.getEmail(),user.getLevel());
+
+            final DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+            final BecomeHelper bec = new BecomeHelper(user.getFilliere(),user.getEmail(),user.getLevel());
 
             //TODO ajout du test de la connexion internet
             //test caracteres interdit pour la base de donnée
@@ -74,9 +79,59 @@ public class BecomeHelperActivity extends AppCompatActivity{
             }
 
 
-            mDatabaseReference.child("BecomeHelper").child(user.getFilliere()).child(tmp).child(user.getId()).setValue(bec);
+            final String finalTmp = tmp;
+            mDatabaseReference.child("BecomeHelper")
+                    .child(user.getFilliere()).addChildEventListener(new ChildEventListener() {
+              @Override
+              public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if(dataSnapshot.getKey().equals(finalTmp)){
+                  for (DataSnapshot data : dataSnapshot.getChildren() ) {
+                    String idTest = data.getKey();
+                    if (idTest.equals(user.getId())) {
+                      register = true;
+                      Toast.makeText(getBaseContext(), "You are already registered in this lesson", Toast.LENGTH_LONG).show();
+                      break;
+                    }
 
-            startActivity(intent);
+
+                  }
+                  if(register != true){
+                    Intent intent = new Intent(BecomeHelperActivity.this,ValidationActivity.class);
+                    mDatabaseReference.child("BecomeHelper").child(user.getFilliere()).child(finalTmp).child(user.getId()).setValue(bec);
+
+                    startActivity(intent);
+                  }
+
+                }
+
+
+              }
+
+              @Override
+              public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+              }
+
+              @Override
+              public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+              }
+
+              @Override
+              public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+              }
+
+              @Override
+              public void onCancelled(DatabaseError databaseError) {
+
+              }
+            });
+
+
+
+
+
           }
 
         }
