@@ -190,9 +190,14 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "This email already exists", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "SignUp failed", Toast.LENGTH_LONG).show();
 
        // _signupButton.setEnabled(true);
+    }
+    public void onMailExits() {
+        Toast.makeText(getBaseContext(), "This email already exists", Toast.LENGTH_LONG).show();
+
+        // _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
@@ -284,7 +289,10 @@ public class SignupActivity extends AppCompatActivity {
 
                             onSignupSuccess();
                         } else {
-                            onSignupFailed();
+                            //onSignupFailed();
+                            onMailExits(); // il refuse l'inscription que l'orsque le mail existe donc
+                            // on met le message "This mail ...." à la place du OnSignupFailed
+                            // dans le cas d'une erreur de la BD il y'aura le msg du On SignUpFailed
                         }
                     }
                 });
